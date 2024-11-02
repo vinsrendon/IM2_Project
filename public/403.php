@@ -54,9 +54,9 @@
         }
     </style>
 
-  <title>Document</title>
+  <title>403-Forbidden</title>
 </head>
-<body>
+<body onload="setTimeout(back, 3000);">
   <use>
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve" class="whistle">
 <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
@@ -67,4 +67,9 @@
 <h1>403</h1>
 <h2>Not this time, access forbidden!</h2>
 </body>
+<script>  
+  function back(){
+    window.history.back();
+  }
+</script>
 </html>

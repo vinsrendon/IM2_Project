@@ -23,7 +23,7 @@ function login(){
         return;
     }
     
-    // AJAX request to handle login
+    
     $.ajax({
         type: "POST",
         url: './src/request/request.php',

@@ -32,21 +32,15 @@ if(isset($_SESSION['isLoggedin']) && isset($_SESSION['Role'])){
         if($_SESSION['Role'] === 1 && array_key_exists($uri,$routesAdmin)){
             require $routesAdmin[$uri];
             die();
-        }
-        else if($_SESSION['Role'] === 1 && array_key_exists($uri,$routes) || $_SESSION['Role'] === 0 && array_key_exists($uri,$routesAdmin)){
-            // require $routesAdmin['/admin'];
-            require 'public/403.php';
-            die();
-        }
+        }        
         else if($_SESSION['Role'] === 0 && array_key_exists($uri,$routes)){
             require $routes[$uri];
             die();
         }
-        // else if($_SESSION['Role'] === 0 && array_key_exists($uri,$routesAdmin)){
-        //     // require $routes['/dashboard'];
-        //     require 'public/403.php';
-        //     die();
-        // }
+        else if($_SESSION['Role'] === 1 && array_key_exists($uri,$routes) || $_SESSION['Role'] === 0 && array_key_exists($uri,$routesAdmin)){
+            require 'public/403.php';
+            die();
+        }
         else{
             require 'public/404.php';
             die();

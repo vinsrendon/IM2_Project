@@ -22,36 +22,7 @@ if (isset($_POST['choice'])) {
         case 'addUser':
             $ctr = new userController();
             $ctr->addUser();   
-            break;        
-        // case 'editUser':            
-        //     $ctr = new userController();
-        //     // $ctr->user_logout();        
-        //     break;
-        // case 'loadToDoList':    
-        //     session_start();        
-        //     $ctr = new todoController();
-        //     $ctr->todoList();        
-        //     break;
-        // case 'updateToDo':
-        //     session_start();
-        //     $ctr = new todoController();
-        //     $ctr->updateToDo();
-        //     break;
-        // case 'deleteTodo':
-        //     session_start();
-        //     $ctr = new todoController();
-        //     $ctr->deleteTodo();
-        //     break;
-        // case 'updateTodoStatus':
-        //     session_start();
-        //     $ctr = new todoController();
-        //     $ctr->updateToDoStatus();
-        //     break;
-        // case 'addToDoList':
-        //     session_start();
-        //     $ctr = new todoController();
-        //     $ctr->addTodo();
-        //     break;
+            break;
         default:
             echo 'cannot handle request';
             break;
