@@ -6,6 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/src/controllers/userController.php';
 require_once $_SERVER['DOCUMENT_ROOT'] .'/src/controllers/subjectController.php';
 
 if (isset($_POST['choice'])) {    
+    $_POST['choice'] = htmlspecialchars(strip_tags($_POST['choice']));
     switch ($_POST['choice']) {
         
         case 'login':            
@@ -25,6 +26,7 @@ if (isset($_POST['choice'])) {
             break;
         default:
             echo 'cannot handle request';
+            // echo print_r($_REQUEST);
             break;
     }
 }
