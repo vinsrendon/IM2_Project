@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2024 at 03:52 AM
+-- Generation Time: Nov 03, 2024 at 12:16 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,6 +35,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `userid` INT) 
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user` (IN `userid` INT)   BEGIN
+SELECT * FROM users u JOIN users_info ui ON u.user_id=ui.user_id 
+JOIN users_guardian_info ug ON u.user_id=ug.user_id WHERE u.user_id=userid;
+
+
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `hard_delete` (IN `userid` INT)   BEGIN
 	DELETE FROM users WHERE user_id = userid;
     DELETE FROM users_info WHERE user_id = userid;
@@ -49,7 +56,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reactivate_user` (IN `userid` INT) 
 	UPDATE users SET flag = 1 WHERE user_id = userid;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `register_user` (IN `studid` INT, IN `studpass` VARCHAR(128), IN `role` INT, IN `flag` INT, IN `fname` VARCHAR(128), IN `mname` VARCHAR(128), IN `lname` VARCHAR(128), IN `DOB` DATE, IN `pnumber` VARCHAR(15), IN `address` VARCHAR(256), IN `gfname` VARCHAR(128), IN `gmname` VARCHAR(128), IN `glname` VARCHAR(128), IN `gaddress` VARCHAR(256), IN `gpnumber` VARCHAR(15))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `register_user` (IN `studid` INT, IN `studpass` VARCHAR(128), IN `role` INT, IN `flag` INT, IN `fname` VARCHAR(128), IN `mname` VARCHAR(128), IN `lname` VARCHAR(128), IN `DOB` DATE, IN `address` VARCHAR(256), IN `pnumber` VARCHAR(15), IN `gfname` VARCHAR(128), IN `gmname` VARCHAR(128), IN `glname` VARCHAR(128), IN `gaddress` VARCHAR(256), IN `gpnumber` VARCHAR(15))   BEGIN
 	DECLARE new_user_id INT;
 
  	INSERT INTO users(stud_id,stud_pass,Role,Flag) VALUES(studid,studpass,role,flag);
@@ -60,6 +67,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `register_user` (IN `studid` INT, IN
  
 	INSERT into users_guardian_info(user_id,gfname,gmname,glname,gaddress,gpnumber) VALUES(new_user_id,gfname,gmname,glname,gaddress,gpnumber);
  
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `truncate_tables` ()   BEGIN
+    TRUNCATE TABLE subjects;
+    TRUNCATE TABLE users;
+    TRUNCATE TABLE users_info;
+    TRUNCATE TABLE users_guardian_info;
+    TRUNCATE TABLE users_subjects;
 END$$
 
 DELIMITER ;
@@ -121,8 +136,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
-(2, 20230101, '$2y$10$.aOSeyjIYoo0BGUD96IfoeC8bUDXeqN9nWon0u8SA0rqxcZSaTrHW', 0, 1),
-(3, 101, '$2y$10$.aOSeyjIYoo0BGUD96IfoeC8bUDXeqN9nWon0u8SA0rqxcZSaTrHW', 1, 1);
+(1, 20230101, '$2y$10$czBN8O/nX.MVbKFEYYPy5.lUjll5t75Gagrk.isN4dvV2MeWU6b7.', 0, 1),
+(2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -144,7 +159,8 @@ CREATE TABLE `users_guardian_info` (
 --
 
 INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gaddress`, `gpnumber`) VALUES
-(2, 'Isabella ', 'Hurtado ', 'Covas', 'Rua Diogo Ribeiro, 273 São Paulo-SP 02355-120 ', '09123456743');
+(1, 'Nicandro', 'Bustos ', 'Montano', 'Rua Maria Areia 575 Cataguases MG 36774 176', '09123456781'),
+(2, 'admin gfname', 'admin gmname', 'admin glname', 'admin gaddress', 'admin gpnumber');
 
 -- --------------------------------------------------------
 
@@ -167,7 +183,8 @@ CREATE TABLE `users_info` (
 --
 
 INSERT INTO `users_info` (`user_id`, `fname`, `mname`, `lname`, `DOB`, `address`, `pnumber`) VALUES
-(2, 'Bridget', 'Galvez', 'Lopez', '1998-03-12', '09123456781', '1951 Simons Hol');
+(1, 'Eusebia ', 'Bustos ', 'Montano', '2003-12-26', 'Rua Maria Areia 575 Cataguases MG 36774 176', '09123456780'),
+(2, 'admin fname', 'admin mname', 'admin lname', '2003-12-26', 'admin adress', 'admin pnumber');
 
 -- --------------------------------------------------------
 
@@ -221,7 +238,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -4,6 +4,10 @@ function login(){
     let userError = document.getElementById("userError");
     let passError = document.getElementById("passError");
 
+    let button = document.getElementById("loginBtn");
+
+    button.value = "Logging In...";
+
     userError.classList.add("hidden");
     passError.classList.add("hidden");
 
@@ -37,8 +41,16 @@ function login(){
             response = JSON.parse(response);
             if (response.status === 'success') {
                 document.getElementById("studentId").value = "";
-                document.getElementById("pass").value = "";
-                window.location.href = '/dashboard';
+                document.getElementById("pass").value = "";   
+                switch (response.role) {
+                    case 0:
+                        window.location.href = '/dashboard';
+                        break;                
+                    case 1:
+                        window.location.href = '/admin';
+                        break;
+                }
+                button.value = "LOGIN";
             } else {
                 passError.innerText = response.message;
                 passError.classList.remove("hidden");
@@ -85,4 +97,9 @@ function logout(){
 
 function addUser(){
     
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('hidden');
 }

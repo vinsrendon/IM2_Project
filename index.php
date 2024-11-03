@@ -13,7 +13,8 @@ $routes = [
 
 $routesAdmin =[
     '/admin' => 'public/views/admin/adminDashboard.php',
-    '/addsubject' => 'public/views/admin/addSubject.php'
+    '/addsubject' => 'public/views/admin/addSubject.php',
+    '/adduser' => 'public/views/admin/addUser.php'
 ];
 
 $routesGlobal = [
