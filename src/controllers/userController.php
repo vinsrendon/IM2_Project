@@ -37,4 +37,20 @@ class userController{
             echo $th;
         }
     }
+
+    function getStudents(){
+        
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL get_students()");
+            $statement->execute();
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return json_encode($user);
+        } catch (\Throwable $th) {
+            echo $th;
+        }
+    }
 }

@@ -99,7 +99,45 @@ function addUser(){
     
 }
 
+
+function getStudents(){
+    let table = document.getElementById("studentsList");
+
+    let newRow = table.insertRow();
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: 'getStudents'
+        },
+        success: function(response) {
+            // console.log(response);
+            response = JSON.parse(response);
+            // console.log(response);
+            newRow.innerHTML=`
+                <td class="border border-slate-300 text-center">${response.stud_id}</td>
+                <td class="border border-slate-300 text-center">${response.lname}</td>
+                <td class="border border-slate-300 text-center">${response.fname}</td>
+                <td class="border border-slate-300 text-center">${response.mname}</td>
+                <td class="border border-slate-300 text-center">
+                <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${response.stud_id})">INFO</button>
+                <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${response.stud_id})">SUBJECT</button>
+                <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="test(${response.stud_id})">DEACTIVATE</button>
+                </td>
+            `;
+        },
+        error: function(xhr, status, error) {
+            console.log("An error occurred. Please try again later.");
+        }
+    });
+}
+
 function toggleMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('hidden');
+}
+
+function test(a){
+    alert("test "+ a);
 }

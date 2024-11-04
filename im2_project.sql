@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2024 at 12:16 PM
+-- Generation Time: Nov 04, 2024 at 05:33 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,6 +32,12 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `userid` INT)   BEGIN
 	UPDATE users SET flag = 0 WHERE user_id = userid;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` ()   BEGIN
+
+SELECT u.stud_id,ui.fname,ui.mname,ui.lname FROM users u JOIN users_info ui ON u.user_id=ui.user_id WHERE u.Role=0;
 
 END$$
 
