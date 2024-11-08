@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 05:33 PM
+-- Generation Time: Nov 08, 2024 at 05:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -37,7 +37,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` ()   BEGIN
 
-SELECT u.stud_id,ui.fname,ui.mname,ui.lname FROM users u JOIN users_info ui ON u.user_id=ui.user_id WHERE u.Role=0;
+SELECT u.user_id,u.stud_id,u.Flag,ui.fname,ui.mname,ui.lname FROM users u JOIN users_info ui ON u.user_id=ui.user_id WHERE u.Role=0;
 
 END$$
 
@@ -143,7 +143,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
 (1, 20230101, '$2y$10$czBN8O/nX.MVbKFEYYPy5.lUjll5t75Gagrk.isN4dvV2MeWU6b7.', 0, 1),
-(2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1);
+(2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1),
+(26, 20230102, '$2y$10$QxwmUmW4CvpvGLY2P5EIVeGPRTIAXOINJjJxGuJM5Hi9BIpM9lsUi', 0, 1),
+(27, 20230103, '$2y$10$EB8cp0JEk1gVMX5d3MUt2uS.ldkfoD2bnVJIxWRmbLyl4kw4xtrq6', 0, 1),
+(28, 20230104, '$2y$10$IF3qB5A9X5ohNs0Ga5i3nuIGVc2I1Ky9L7tUWrjFU/tvjtjfiFyPq', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -166,7 +169,10 @@ CREATE TABLE `users_guardian_info` (
 
 INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gaddress`, `gpnumber`) VALUES
 (1, 'Nicandro', 'Bustos ', 'Montano', 'Rua Maria Areia 575 Cataguases MG 36774 176', '09123456781'),
-(2, 'admin gfname', 'admin gmname', 'admin glname', 'admin gaddress', 'admin gpnumber');
+(2, 'admin gfname', 'admin gmname', 'admin glname', 'admin gaddress', 'admin gpnumber'),
+(26, 'john', '', 'reyes', 'pilipog', '09765667324'),
+(27, 'john', '', 'curi', 'alegria', '09345623542'),
+(28, 'mark', '', 'doe', 'gabi', '09172563172');
 
 -- --------------------------------------------------------
 
@@ -190,7 +196,10 @@ CREATE TABLE `users_info` (
 
 INSERT INTO `users_info` (`user_id`, `fname`, `mname`, `lname`, `DOB`, `address`, `pnumber`) VALUES
 (1, 'Eusebia ', 'Bustos ', 'Montano', '2003-12-26', 'Rua Maria Areia 575 Cataguases MG 36774 176', '09123456780'),
-(2, 'admin fname', 'admin mname', 'admin lname', '2003-12-26', 'admin adress', 'admin pnumber');
+(2, 'admin fname', 'admin mname', 'admin lname', '2003-12-26', 'admin adress', 'admin pnumber'),
+(26, 'mark', '', 'reyes', '2000-01-01', 'pilipog', '09162536715'),
+(27, 'mari', '', 'curi', '2005-01-01', 'alegria', '09123561253'),
+(28, 'john', '', 'doe', '2001-01-01', 'gabi', '09671523652');
 
 -- --------------------------------------------------------
 
@@ -244,7 +253,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

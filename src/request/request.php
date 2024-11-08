@@ -21,13 +21,20 @@ if (isset($_POST['choice'])) {
             $ctr->logout();        
             break;
         case 'addUser':
-            // $ctr = new userController();
-            // $ctr->addUser();   
+            $ctr = new userController();
+            echo $ctr->addUser();
             break;
         case 'getStudents':
             $ctr = new userController();
-            $st = $ctr->getStudents(); 
-            echo $st;
+            echo $ctr->getStudents(); 
+            break;
+        case 'deactivate':
+            $ctr = new userController();
+            echo $ctr->deactStudent(); 
+            break;
+        case 'activate':
+            $ctr = new userController();
+            echo $ctr->actStudent(); 
             break;
         default:
             echo 'cannot handle request';

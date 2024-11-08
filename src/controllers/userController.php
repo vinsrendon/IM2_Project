@@ -16,8 +16,8 @@ class userController{
             $statement->execute([
                 'stud_id' => htmlspecialchars(strip_tags($_POST['stud_id'])),
                 'stud_pass' => $hashed,
-                'Role' => htmlspecialchars(strip_tags($_POST['Role'])),
-                'Flag' => htmlspecialchars(strip_tags($_POST['Flag'])),
+                'Role' => 0,
+                'Flag' => 1,
                 'fname' => htmlspecialchars(strip_tags($_POST['fname'])),
                 'mname' => htmlspecialchars(strip_tags($_POST['mname'])),
                 'lname' => htmlspecialchars(strip_tags($_POST['lname'])),
@@ -31,10 +31,14 @@ class userController{
                 'gpnumber' => htmlspecialchars(strip_tags($_POST['gpnumber']))
             ]);
 
-            return array(['status' => 'success', 'message' => 'USER ADDED SUCCESSFULLY!']);
+            return json_encode(['status' => 'success', 'message' => 'USER ADDED SUCCESSFULLY!']);
         }
-        catch (\Exception $th) {
-            echo $th;
+        catch (PDOException $th) {            
+            if ($th->getCode() == 23000) {
+                return json_encode(['status' => 'duplicate']);
+            } else {
+                return json_encode($th);
+            }
         }
     }
 
@@ -46,11 +50,39 @@ class userController{
             
             $statement = $con->prepare("CALL get_students()");
             $statement->execute();
-            $user = $statement->fetch(PDO::FETCH_ASSOC);
+            $user = $statement->fetchAll();
 
             return json_encode($user);
-        } catch (\Throwable $th) {
-            echo $th;
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
+    }
+
+    function deactStudent(){
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL deactivate_user(:user_id)");
+            $statement->execute(['user_id'=>$_POST['toDeactivate']]);
+
+            return json_encode(['status' => 'success']);
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
+    }
+
+    function actStudent(){
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL reactivate_user(:user_id)");
+            $statement->execute(['user_id'=>$_POST['toActivate']]);
+
+            return json_encode(['status' => 'success']);
+        } catch (PDOException $th) {
+            return json_encode($th);
         }
     }
 }
