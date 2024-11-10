@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2024 at 09:51 AM
+-- Generation Time: Nov 10, 2024 at 07:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -120,15 +120,16 @@ CREATE TABLE `subjects` (
   `subject_id` int(11) NOT NULL,
   `subject_code` varchar(64) NOT NULL,
   `subject_name` varchar(128) NOT NULL,
-  `units` int(11) NOT NULL
+  `units` int(11) NOT NULL,
+  `course` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subjects`
 --
 
-INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`) VALUES
-(1, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3);
+INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `course`) VALUES
+(1, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT');
 
 -- --------------------------------------------------------
 
