@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 05:50 PM
+-- Generation Time: Nov 10, 2024 at 09:51 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -27,7 +27,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject` (IN `subjectCode` VARCHAR(64), IN `subjectName` VARCHAR(128), IN `units` INT)   BEGIN
 	INSERT INTO subjects(subject_code,subject_name,units)
-    VALUES(subjectCode,subjectName,unis);
+    VALUES(subjectCode,subjectName,units);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `userid` INT)   BEGIN
@@ -122,6 +122,13 @@ CREATE TABLE `subjects` (
   `subject_name` varchar(128) NOT NULL,
   `units` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`) VALUES
+(1, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3);
 
 -- --------------------------------------------------------
 
@@ -247,7 +254,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

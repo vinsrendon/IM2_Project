@@ -37,7 +37,7 @@ function login(){
             stud_pass: pass
         },
         success: function(response) {
-            console.log(response);
+            // console.log(response);
             response = JSON.parse(response);
             if (response.status === 'success') {
                 document.getElementById("studentId").value = "";
@@ -225,8 +225,7 @@ function getStudents(){
         },
         success: function(response) {
             response = JSON.parse(response);
-            console.log(response);
-            
+            // console.log(response);            
 
             response.forEach(student => {
                 let newRow = tbody.insertRow();
@@ -369,4 +368,63 @@ function resetTable(){
     while (tbody.rows.length > 0) {
         tbody.deleteRow(0);
     }
+}
+
+function addSubject(){
+    let subjectCode = document.getElementById("subCode").value.trim();
+    let subjectName = document.getElementById("subName").value.trim();
+    let subjectUnits = document.getElementById("units").value.trim();
+
+    if (!subjectCode ||!subjectName ||!subjectUnits ) {
+        fieldError.classList.remove("hidden");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: "addSubject",
+            sub_Code: subjectCode,
+            sub_Name: subjectName,
+            sub_Units: subjectUnits
+        },
+        success: function (response) {
+            let result = JSON.parse(response);  
+
+            if (result.status === 'success') {
+                Swal.fire({
+                    icon: "success",
+                    title: "Subject Added Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                        let subjectCode = document.getElementById("subCode");
+                        let subjectName = document.getElementById("subName");
+                        let subjectUnits = document.getElementById("units");
+
+                        subjectCode.value = "";
+                        subjectName.value = "";
+                        subjectUnits.value = "";
+                    });
+                                          
+            }
+            else if(result.status === 'duplicate'){
+                Swal.fire({
+                    icon: "error",
+                    title: "Duplicate Entry",        
+                    text: "Subject Code already existed",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }     
+            else
+            {
+                console.log(result);                
+            }           
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+        },
+    });
 }

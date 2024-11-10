@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 p-4 w-full">
     <div class="hidden sm:flex flex justify-between items-center">
         <div class="flex space-x-4">
-            <a href="/admin" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Dashboard</a>
+            <a href="/admin" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Students</a>
             <a href="/addsubject" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add Subject</a>
             <a href="/adduser" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add User</a>
         </div>

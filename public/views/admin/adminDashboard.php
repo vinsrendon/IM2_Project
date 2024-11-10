@@ -19,11 +19,7 @@
                 </svg>
             </div>
 
-            <input
-            class="peer h-full w-full outline-none text-sm text-gray-700 p-2"
-            type="text"
-            id="search"
-            placeholder="Search Student ID..." maxlength="8"/>
+            <input class="peer h-full w-full outline-none text-sm text-gray-700 p-2" type="text" id="search" placeholder="Search Student ID..." maxlength="8"/>
         </div>
     </div>
 
@@ -47,8 +43,8 @@
 <script>
     document.getElementById("search").addEventListener("keypress", function (e) {
         if (e.key < '0' || e.key > '9') {
-            e.preventDefault();
-        }
+            e.preventDefault();            
+        }        
 
         const input = document.getElementById("search").value;
         const table = document.getElementById("studentsTbl");
@@ -67,6 +63,8 @@
             
             rows[i].style.display = rowContainsSearchText ? "" : "none";
         }
+
+        
     });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

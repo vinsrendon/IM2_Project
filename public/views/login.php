@@ -31,7 +31,7 @@
       <input id="loginBtn" type="button" value="LOGIN" onclick="login()" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
     
     <p class="mt-6 text-center text-sm text-gray-500">
-      You can approach the registrar if you have any account problems
+      Account problems?, you can approach us at the registrar office
     </p>
 </div>
 </body>

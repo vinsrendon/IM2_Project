@@ -31,7 +31,7 @@ class userController{
                 'gpnumber' => htmlspecialchars(strip_tags($_POST['gpnumber']))
             ]);
 
-            return json_encode(['status' => 'success', 'message' => 'USER ADDED SUCCESSFULLY!']);
+            return json_encode(['status' => 'success']);
         }
         catch (PDOException $th) {            
             if ($th->getCode() == 23000) {

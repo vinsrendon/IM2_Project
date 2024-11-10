@@ -36,6 +36,10 @@ if (isset($_POST['choice'])) {
             $ctr = new userController();
             echo $ctr->actStudent(); 
             break;
+        case 'addSubject':
+            $ctr = new subjectController();
+            echo $ctr->addSubject(); 
+            break;
         default:
             echo 'cannot handle request';
             // echo print_r($_REQUEST);
