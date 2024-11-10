@@ -428,3 +428,8 @@ function addSubject(){
         },
     });
 }
+
+function getSubjects(){
+    
+    
+}

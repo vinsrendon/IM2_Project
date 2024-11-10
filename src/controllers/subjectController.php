@@ -24,4 +24,8 @@ class subjectController{
             }
         }
     }
+
+    function getSubject(){
+        
+    }
 }

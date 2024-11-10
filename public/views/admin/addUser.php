@@ -87,7 +87,7 @@
         </div>
         <div class="mb-5">
             <label id="passError" class="text-red-500 text-xs hidden">Password doesn't match</label>
-            <label id="fieldError" class="text-red-500 text-xs hidden">Fill necessary all fields</label>
+            <label id="fieldError" class="text-red-500 text-xs hidden">Fill all necessary fields</label>
         </div>
         
         <input type="button" value="REGISTER" onclick="addUser()" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

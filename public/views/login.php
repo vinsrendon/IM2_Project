@@ -9,7 +9,7 @@
 <body class="bg-gray-100 flex justify-center items-center h-screen">
 <div id="app"></div>
 <div class="m-5 p-6 bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-center mb-2">Students Directory</h2>
+    <h2 class="text-2xl font-semibold text-center mb-2">Student Directory</h2>
     <p class="text-center text-gray-500 mb-6">
       Please sign-in to your account and start browsing your student information
     </p>
