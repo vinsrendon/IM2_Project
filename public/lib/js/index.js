@@ -248,7 +248,7 @@ function getStudents(){
                     <td class="border border-slate-300 text-center">${student.mname}</td>
                     <td class="border border-slate-300 text-center">
                     <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">INFO</button>
-                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">SUBJECT</button>
+                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">SUBJECTS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
                 `;
@@ -272,11 +272,12 @@ function test(a){
 function deactivateStud(toDeact){
     Swal.fire({
         title: "Are you sure?",
-        text: "Do you want to delete student?",
-        icon: "question",
+        text: "Do you want to deactive student account?",
+        icon: "warning",
         showCancelButton: true,
         confirmButtonText:"Yes",
-        cancelButtonText:"No"
+        confirmButtonColor: "#d33",
+        cancelButtonText:"No, go back"
       }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -321,7 +322,7 @@ function activateStud(toAct){
         text: "Do you want to activate student?",
         icon: "question",
         showCancelButton: true,
-        confirmButtonText:"Yes",
+        confirmButtonText:"Yes activate student account",
         cancelButtonText:"No"
       }).then((result) => {
         if (result.isConfirmed) {
@@ -371,11 +372,12 @@ function resetTable(){
 }
 
 function addSubject(){
-    let subjectCode = document.getElementById("subCode").value.trim();
-    let subjectName = document.getElementById("subName").value.trim();
-    let subjectUnits = document.getElementById("units").value.trim();
+    let subjectCode = document.getElementById("subCode").value.trim().toUpperCase();
+    let subjectName = document.getElementById("subName").value.trim().toUpperCase();
+    let subjectUnits = document.getElementById("units").value.trim().toUpperCase();
+    let subjectCourse = document.getElementById("course").value.trim().toUpperCase();
 
-    if (!subjectCode ||!subjectName ||!subjectUnits ) {
+    if (!subjectCode ||!subjectName ||!subjectUnits ||!subjectCourse) {
         fieldError.classList.remove("hidden");
         return;
     }
@@ -387,7 +389,8 @@ function addSubject(){
             choice: "addSubject",
             sub_Code: subjectCode,
             sub_Name: subjectName,
-            sub_Units: subjectUnits
+            sub_Units: subjectUnits,
+            sub_Course: subjectCourse
         },
         success: function (response) {
             let result = JSON.parse(response);  
@@ -402,10 +405,12 @@ function addSubject(){
                         let subjectCode = document.getElementById("subCode");
                         let subjectName = document.getElementById("subName");
                         let subjectUnits = document.getElementById("units");
+                        let subjectCourse = document.getElementById("course");
 
                         subjectCode.value = "";
                         subjectName.value = "";
                         subjectUnits.value = "";
+                        subjectCourse.value = "";
                     });
                                           
             }
@@ -430,6 +435,37 @@ function addSubject(){
 }
 
 function getSubjects(){
-    
-    
+    let tbody = document.getElementById("subjectsList");    
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: 'getSubjects'
+        },
+        success: function(response) {
+            response = JSON.parse(response);
+
+            response.forEach(subject => {
+                let newRow = tbody.insertRow();
+
+                newRow.innerHTML=`
+                    <td class="border border-slate-300 text-center">${subject.subject_code}</td>
+                    <td class="border border-slate-300 text-center">${subject.subject_name}</td>
+                    <td class="border border-slate-300 text-center">${subject.units}</td>
+                    <td class="border border-slate-300 text-center">${subject.course}</td>
+                    <td class="border border-slate-300 text-center">
+                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="test(${subject.subject_id})">DELETE</button>
+                    </td>
+                `;
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
+        }
+    });    
+}
+
+function dltSubject(dltSub){
+
 }

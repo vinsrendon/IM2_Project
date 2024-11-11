@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2024 at 07:26 PM
+-- Generation Time: Nov 11, 2024 at 05:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -25,9 +25,9 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject` (IN `subjectCode` VARCHAR(64), IN `subjectName` VARCHAR(128), IN `units` INT)   BEGIN
-	INSERT INTO subjects(subject_code,subject_name,units)
-    VALUES(subjectCode,subjectName,units);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject` (IN `subjectCode` VARCHAR(64), IN `subjectName` VARCHAR(128), IN `units` INT, IN `course` VARCHAR(64))   BEGIN
+	INSERT INTO subjects(subject_code,subject_name,units,course)
+    VALUES(subjectCode,subjectName,units,course);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `userid` INT)   BEGIN
@@ -38,6 +38,12 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` ()   BEGIN
 
 SELECT u.user_id,u.stud_id,u.Flag,ui.fname,ui.mname,ui.lname FROM users u JOIN users_info ui ON u.user_id=ui.user_id WHERE u.Role=0;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_subjects` ()   BEGIN
+
+SELECT * FROM subjects;
 
 END$$
 
@@ -113,6 +119,18 @@ CREATE TABLE `getuserinfo` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `section_template`
+--
+
+CREATE TABLE `section_template` (
+  `template_id` int(11) NOT NULL,
+  `template_section` varchar(16) NOT NULL,
+  `template_description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subjects`
 --
 
@@ -129,7 +147,31 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `course`) VALUES
-(1, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT');
+(1, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT'),
+(2, 'HCI 1', 'HUMAN COMPUTER INTERFACE 1', 3, 'BSIT'),
+(3, 'IM 1', 'INFORMATION MANAGEMENT 1', 3, 'BSIT'),
+(4, 'HCI 2', 'HUMAN COMPUTER INTERFACE 2', 3, 'BSIT'),
+(5, 'OS', 'OPERATION SYSTEM', 3, 'BSIT'),
+(6, 'OOP1', 'OBJECT ORIENTED PROGRAMMING 1', 3, 'BSIT'),
+(7, 'OOP2', 'OBJECT ORIENTED PROGRAMMING 2', 3, 'BSIT'),
+(8, 'IM2', 'INFORMATION MANAGEMENT 2', 3, 'BSIT'),
+(9, 'IAS1', 'INFORMATION ASSURANCE SECURITY 1', 3, 'BSIT'),
+(10, 'IT TRACK EL 2', 'BUSINESS ANALYTICS', 3, 'BSIT'),
+(11, 'NET1', 'NETWORKING 1', 3, 'BSIT'),
+(12, 'NET2', 'NETWORKING 2', 3, 'BSIT'),
+(15, 'SOC SCI1', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
+(16, 'SOC SCI 2', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `template_info`
+--
+
+CREATE TABLE `template_info` (
+  `template_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -234,11 +276,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indexes for table `section_template`
+--
+ALTER TABLE `section_template`
+  ADD PRIMARY KEY (`template_id`);
+
+--
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`subject_id`),
   ADD UNIQUE KEY `subject_code` (`subject_code`);
+
+--
+-- Indexes for table `template_info`
+--
+ALTER TABLE `template_info`
+  ADD KEY `template_id` (`template_id`,`subject_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Indexes for table `users`
@@ -248,6 +303,25 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `stud_id` (`stud_id`);
 
 --
+-- Indexes for table `users_guardian_info`
+--
+ALTER TABLE `users_guardian_info`
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `users_info`
+--
+ALTER TABLE `users_info`
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `users_subjects`
+--
+ALTER TABLE `users_subjects`
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `stud_id` (`stud_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -255,13 +329,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `template_info`
+--
+ALTER TABLE `template_info`
+  ADD CONSTRAINT `template_info_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `section_template` (`template_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `template_info_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users_guardian_info`
+--
+ALTER TABLE `users_guardian_info`
+  ADD CONSTRAINT `users_guardian_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users_info`
+--
+ALTER TABLE `users_info`
+  ADD CONSTRAINT `users_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users_subjects`
+--
+ALTER TABLE `users_subjects`
+  ADD CONSTRAINT `users_subjects_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_subjects_ibfk_2` FOREIGN KEY (`stud_id`) REFERENCES `users` (`stud_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

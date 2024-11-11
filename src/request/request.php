@@ -40,6 +40,10 @@ if (isset($_POST['choice'])) {
             $ctr = new subjectController();
             echo $ctr->addSubject(); 
             break;
+        case 'getSubjects':
+            $ctr = new subjectController();
+            echo $ctr->getSubject();
+            break;
         default:
             echo 'cannot handle request';
             // echo print_r($_REQUEST);

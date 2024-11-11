@@ -7,11 +7,12 @@ class subjectController{
             $con = $db->initDatabase();
 
             $statement = $con->prepare("CALL add_subject(
-            :sub_Code,:sub_Name,:sub_Units)");
+            :sub_Code,:sub_Name,:sub_Units,:sub_Course)");
             $statement->execute([
                 'sub_Code' => htmlspecialchars(strip_tags($_POST['sub_Code'])),
                 'sub_Name' => htmlspecialchars(strip_tags($_POST['sub_Name'])),
-                'sub_Units' => htmlspecialchars(strip_tags($_POST['sub_Units']))
+                'sub_Units' => htmlspecialchars(strip_tags($_POST['sub_Units'])),
+                'sub_Course' => htmlspecialchars(strip_tags($_POST['sub_Course']))
             ]);
 
             return json_encode(['status' => 'success']);
@@ -26,6 +27,17 @@ class subjectController{
     }
 
     function getSubject(){
-        
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL get_subjects()");
+            $statement->execute();
+            $subjects = $statement->fetchAll();
+
+            return json_encode($subjects);
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
     }
 }

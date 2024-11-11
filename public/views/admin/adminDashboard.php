@@ -10,7 +10,7 @@
 </head>
 <body onload="getStudents()">
     <?php require_once 'adminNav.php'?>    
-
+    
     <div class='w-full sm:px-3 flex sm:justify-around justify-center flex-wrap'>
         <div class="mt-3 relative flex w-3/4 h-12 rounded-lg focus-within:shadow-lg bg-blue-500 border overflow-hidden">
             <div class="grid place-items-center h-full w-12 text-gray-300">
@@ -19,7 +19,7 @@
                 </svg>
             </div>
 
-            <input class="peer h-full w-full outline-none text-sm text-gray-700 p-2" type="text" id="search" placeholder="Search Student ID..." maxlength="8"/>            
+            <input class="peer h-full w-full outline-none text-sm text-gray-700 p-2" type="text" id="search" placeholder="Search Student..." maxlength="8"/>            
         </div>
         <div>
             <a href="/adduser"><button class="mt-3 h-12 ml-3 bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD STUDENT</button></a>
@@ -44,10 +44,7 @@
 
 </body>
 <script>
-    document.getElementById("search").addEventListener("keypress", function (e) {
-        if (e.key < '0' || e.key > '9') {
-            e.preventDefault();            
-        }        
+    document.getElementById("search").addEventListener("keypress", function (e) {        
 
         const input = document.getElementById("search").value;
         const table = document.getElementById("studentsTbl");

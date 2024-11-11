@@ -15,20 +15,26 @@
         <h2 class="text-2xl font-semibold text-center mb-2">Subject Info</h2>
         <div class="mb-4">
             <label for="subCode" class="block text-sm font-medium text-gray-700">Subject Code</label>
-            <input type="text" id="subCode" name="subCode" placeholder="Enter Subject Code" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="8">
+            <input type="text" id="subCode" name="subCode" placeholder="Enter Subject Code" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="64">
         </div>
-        <div class="grid grid-cols-2 mb-4 gap-4">
-            <div>
-                <div class="flex justify-between">
+        <div>
+            <div class="flex justify-between">
                 <label for="subName" class="block text-sm font-medium text-gray-700">Subject Name</label>
                 </div>
-                <input type="text" id="subName" name="subName" placeholder="Enter Subject Name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="subName" name="subName" placeholder="Enter Subject Name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="128">
             </div>
+        <div class="grid grid-cols-2 mb-4 gap-4">
             <div>
                 <div class="flex justify-between">
                 <label for="units" class="block text-sm font-medium text-gray-700">Subject Units</label>
                 </div>
-                <input type="text" id="units" name="units" placeholder="Enter Subject Units" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="units" name="units" placeholder="Enter Subject Units" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="11">
+            </div>
+            <div>
+                <div class="flex justify-between">
+                <label for="course" class="block text-sm font-medium text-gray-700">Course</label>
+                </div>
+                <input type="text" id="course" name="course" placeholder="Enter Subject Course" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="12">
             </div>
         </div>
         <div class="mb-5">

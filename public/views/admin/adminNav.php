@@ -4,7 +4,7 @@
             <a href="/admin" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Students</a>
             <!-- <a href="/adduser" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add User</a> -->
             <a href="/subjects" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Subjects</a>
-            <a href="/addsubject" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add Subject</a>            
+            <!-- <a href="/addsubject" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add Subject</a>             -->
         </div>
         <div>
             <button class="bg-red-500 text-white text-lg px-3 py-2 rounded hover:bg-red-600" onclick="logout()">Logout</button>
