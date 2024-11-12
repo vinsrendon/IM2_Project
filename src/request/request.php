@@ -28,6 +28,10 @@ if (isset($_POST['choice'])) {
             $ctr = new userController();
             echo $ctr->getStudents(); 
             break;
+        case 'getStudentById':
+            $ctr = new userController();
+            echo $ctr->getStudentById();
+            break;
         case 'deactivate':
             $ctr = new userController();
             echo $ctr->deactStudent(); 
@@ -43,6 +47,10 @@ if (isset($_POST['choice'])) {
         case 'getSubjects':
             $ctr = new subjectController();
             echo $ctr->getSubject();
+            break;
+        case 'dltSubject':
+            $ctr = new subjectController();
+            echo $ctr->dltSubject();
             break;
         default:
             echo 'cannot handle request';

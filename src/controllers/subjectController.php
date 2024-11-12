@@ -40,4 +40,18 @@ class subjectController{
             return json_encode($th);
         }
     }
+
+    function dltSubject(){
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL delete_subject(:sub_id)");
+            $statement->execute(['sub_id'=>$_POST['sub_id']]);
+
+            return json_encode(['status' => 'success']);
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
+    }
 }

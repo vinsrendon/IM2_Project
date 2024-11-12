@@ -247,12 +247,43 @@ function getStudents(){
                     <td class="border border-slate-300 text-center">${student.fname}</td>
                     <td class="border border-slate-300 text-center">${student.mname}</td>
                     <td class="border border-slate-300 text-center">
-                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">INFO</button>
+                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
                     <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">SUBJECTS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
                 `;
             });
+        },
+        error: function(xhr, status, error) {
+            console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
+        }
+    });
+}
+
+function getStudentById(studentId){
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: 'getStudentById',
+            user_id:studentId
+        },
+        success: function(response) {
+            console.log(response);
+            
+            response = JSON.parse(response);   
+
+            if(response.status === 'success'){
+                window.location.href = "/viewstudentinfo";
+            }
+            else
+            {
+                Swal.fire({
+                    icon: "error",
+                    title: "Check logs for error"
+                });
+                console.log(response);
+            }
         },
         error: function(xhr, status, error) {
             console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
@@ -371,6 +402,15 @@ function resetTable(){
     }
 }
 
+function resetSubjecTable(){
+    const table = document.getElementById("subjectsTbl");
+    const tbody = table.getElementsByTagName("tbody")[0];
+
+    while (tbody.rows.length > 0) {
+        tbody.deleteRow(0);
+    }
+}
+
 function addSubject(){
     let subjectCode = document.getElementById("subCode").value.trim().toUpperCase();
     let subjectName = document.getElementById("subName").value.trim().toUpperCase();
@@ -455,7 +495,7 @@ function getSubjects(){
                     <td class="border border-slate-300 text-center">${subject.units}</td>
                     <td class="border border-slate-300 text-center">${subject.course}</td>
                     <td class="border border-slate-300 text-center">
-                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="test(${subject.subject_id})">DELETE</button>
+                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
                     </td>
                 `;
             });
@@ -467,5 +507,48 @@ function getSubjects(){
 }
 
 function dltSubject(dltSub){
-
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to delete subject?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText:"Yes",
+        confirmButtonColor: "#d33",
+        cancelButtonText:"No, go back"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: './src/request/request.php',
+                data: {
+                    choice: "dltSubject",
+                    sub_id:dltSub
+                },
+                success: function (response) {
+                    let result = JSON.parse(response);   
+                    if (result.status === 'success') {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Subject Deleted Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        resetSubjecTable();
+                        getSubjects();
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Check logs for error",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log(result);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                },
+            });
+        }
+    });
 }

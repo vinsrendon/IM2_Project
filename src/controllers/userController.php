@@ -18,17 +18,17 @@ class userController{
                 'stud_pass' => $hashed,
                 'Role' => 0,
                 'Flag' => 1,
-                'fname' => htmlspecialchars(strip_tags($_POST['fname'])),
-                'mname' => htmlspecialchars(strip_tags($_POST['mname'])),
-                'lname' => htmlspecialchars(strip_tags($_POST['lname'])),
-                'DOB' => htmlspecialchars(strip_tags($_POST['DOB'])),
-                'address' => htmlspecialchars(strip_tags($_POST['address'])),
-                'pnumber' => htmlspecialchars(strip_tags($_POST['pnumber'])),
-                'gfname' => htmlspecialchars(strip_tags($_POST['gfname'])),
-                'gmname' => htmlspecialchars(strip_tags($_POST['gmname'])),
-                'glname' => htmlspecialchars(strip_tags($_POST['glname'])),
-                'gaddress' => htmlspecialchars(strip_tags($_POST['gaddress'])),
-                'gpnumber' => htmlspecialchars(strip_tags($_POST['gpnumber']))
+                'fname' => htmlspecialchars(strtoupper(strip_tags($_POST['fname']))),
+                'mname' => htmlspecialchars(strtoupper(strip_tags($_POST['mname']))),
+                'lname' => htmlspecialchars(strtoupper(strip_tags($_POST['lname']))),
+                'DOB' => htmlspecialchars(strtoupper(strip_tags($_POST['DOB']))),
+                'address' => htmlspecialchars(strtoupper(strip_tags($_POST['address']))),
+                'pnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['pnumber']))),
+                'gfname' => htmlspecialchars(strtoupper(strip_tags($_POST['gfname']))),
+                'gmname' => htmlspecialchars(strtoupper(strip_tags($_POST['gmname']))),
+                'glname' => htmlspecialchars(strtoupper(strip_tags($_POST['glname']))),
+                'gaddress' => htmlspecialchars(strtoupper(strip_tags($_POST['gaddress']))),
+                'gpnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber'])))
             ]);
 
             return json_encode(['status' => 'success']);
@@ -42,8 +42,7 @@ class userController{
         }
     }
 
-    function getStudents(){
-        
+    function getStudents(){        
         try {
             $db = new database();
             $con = $db->initDatabase();
@@ -79,6 +78,35 @@ class userController{
             
             $statement = $con->prepare("CALL reactivate_user(:user_id)");
             $statement->execute(['user_id'=>$_POST['toActivate']]);
+
+            return json_encode(['status' => 'success']);
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
+    }
+
+    function getStudentById(){
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL get_user(:user_id)");
+            $statement->execute(['user_id' => $_POST['user_id']]);
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+            session_start();
+            $_SESSION['temp_stud_id'] = $user['stud_id'];
+            $_SESSION['temp_fname'] = $user['fname'];
+            $_SESSION['temp_mname'] = $user['mname'];
+            $_SESSION['temp_lname'] = $user['lname'];
+            $_SESSION['temp_DOB'] = $user['DOB'];
+            $_SESSION['temp_address'] = $user['address'];
+            $_SESSION['temp_pnumber'] = $user['pnumber'];
+            $_SESSION['temp_gfname'] = $user['gfname'];
+            $_SESSION['temp_gmname'] = $user['gmname'];
+            $_SESSION['temp_glname'] = $user['glname'];
+            $_SESSION['temp_gaddress'] = $user['gaddress'];
+            $_SESSION['temp_gpnumber'] = $user['gpnumber'];
 
             return json_encode(['status' => 'success']);
         } catch (PDOException $th) {

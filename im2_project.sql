@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2024 at 05:20 PM
+-- Generation Time: Nov 12, 2024 at 03:01 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,6 +32,12 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `userid` INT)   BEGIN
 	UPDATE users SET flag = 0 WHERE user_id = userid;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_subject` (IN `subId` INT)   BEGIN
+
+DELETE FROM subjects WHERE subjects.subject_id = subId;
 
 END$$
 
@@ -147,7 +153,6 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `course`) VALUES
-(1, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT'),
 (2, 'HCI 1', 'HUMAN COMPUTER INTERFACE 1', 3, 'BSIT'),
 (3, 'IM 1', 'INFORMATION MANAGEMENT 1', 3, 'BSIT'),
 (4, 'HCI 2', 'HUMAN COMPUTER INTERFACE 2', 3, 'BSIT'),
@@ -160,7 +165,8 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `
 (11, 'NET1', 'NETWORKING 1', 3, 'BSIT'),
 (12, 'NET2', 'NETWORKING 2', 3, 'BSIT'),
 (15, 'SOC SCI1', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
-(16, 'SOC SCI 2', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT');
+(16, 'SOC SCI 2', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
+(17, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT');
 
 -- --------------------------------------------------------
 
@@ -192,11 +198,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
-(1, 20230101, '$2y$10$czBN8O/nX.MVbKFEYYPy5.lUjll5t75Gagrk.isN4dvV2MeWU6b7.', 0, 1),
 (2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1),
-(26, 20230102, '$2y$10$QxwmUmW4CvpvGLY2P5EIVeGPRTIAXOINJjJxGuJM5Hi9BIpM9lsUi', 0, 1),
-(27, 20230103, '$2y$10$EB8cp0JEk1gVMX5d3MUt2uS.ldkfoD2bnVJIxWRmbLyl4kw4xtrq6', 0, 1),
-(28, 20230104, '$2y$10$IF3qB5A9X5ohNs0Ga5i3nuIGVc2I1Ky9L7tUWrjFU/tvjtjfiFyPq', 0, 1);
+(29, 20230101, '$2y$10$ELrV7ZBhD5Kw2gYmDtk9suLEQgmpOi863WJmuu7Q/Ub9k5Bb1tDXS', 0, 1),
+(30, 20230102, '$2y$10$IR3wip.oJJwwGP8iC8GsweDlyCdOd3gDGy6kCuLw3xpZSeqRRX2gO', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -218,11 +222,9 @@ CREATE TABLE `users_guardian_info` (
 --
 
 INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gaddress`, `gpnumber`) VALUES
-(1, 'Nicandro', 'Bustos ', 'Montano', 'Rua Maria Areia 575 Cataguases MG 36774 176', '09123456781'),
 (2, 'admin gfname', 'admin gmname', 'admin glname', 'admin gaddress', 'admin gpnumber'),
-(26, 'john', '', 'reyes', 'pilipog', '09765667324'),
-(27, 'john', '', 'curi', 'alegria', '09345623542'),
-(28, 'mark', '', 'doe', 'gabi', '09172563172');
+(29, 'MARK', '', 'DOE', 'GABI CORDOVA', '09347537656'),
+(30, 'GEORGE', '', 'REYES', 'PILIPOG', '09785623786');
 
 -- --------------------------------------------------------
 
@@ -245,11 +247,9 @@ CREATE TABLE `users_info` (
 --
 
 INSERT INTO `users_info` (`user_id`, `fname`, `mname`, `lname`, `DOB`, `address`, `pnumber`) VALUES
-(1, 'Eusebia ', 'Bustos ', 'Montano', '2003-12-26', 'Rua Maria Areia 575 Cataguases MG 36774 176', '09123456780'),
 (2, 'admin fname', 'admin mname', 'admin lname', '2003-12-26', 'admin adress', 'admin pnumber'),
-(26, 'mark', '', 'reyes', '2000-01-01', 'pilipog', '09162536715'),
-(27, 'mari', '', 'curi', '2005-01-01', 'alegria', '09123561253'),
-(28, 'john', '', 'doe', '2001-01-01', 'gabi', '09671523652');
+(29, 'JOHN', '', 'DOE', '2001-05-22', 'GABI CORDOVA', '07864283756'),
+(30, 'JOHN', '', 'REYES', '2001-04-25', 'PILIPOG', '09187346573');
 
 -- --------------------------------------------------------
 
@@ -329,13 +329,13 @@ ALTER TABLE `users_subjects`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
