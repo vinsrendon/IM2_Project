@@ -8,7 +8,8 @@ $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
 $routes = [            
     '/dashboard' => 'public/views/dashboard.php',
-    '/profile' => 'public/views/profile.php'
+    '/profile' => 'public/views/profile.php',
+    '/changepass' => 'public/views/changepassword.php'
 ];
 
 $routesAdmin =[

@@ -40,6 +40,15 @@ if (isset($_POST['choice'])) {
             $ctr = new userController();
             echo $ctr->actStudent(); 
             break;
+        case 'changePass':
+            session_start();
+            $ctr = new userController();
+            echo $ctr->changePass(); 
+            break;
+        case 'resetPass':
+            $ctr = new userController();
+            echo $ctr->resetPass(); 
+            break;
         case 'addSubject':
             $ctr = new subjectController();
             echo $ctr->addSubject(); 
@@ -51,10 +60,9 @@ if (isset($_POST['choice'])) {
         case 'dltSubject':
             $ctr = new subjectController();
             echo $ctr->dltSubject();
-            break;
+            break;        
         default:
             echo 'cannot handle request';
-            // echo print_r($_REQUEST);
             break;
     }
 }

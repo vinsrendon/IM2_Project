@@ -1,6 +1,6 @@
 function login(){
-    let studentId = document.getElementById("studentId").value.trim();
-    let pass = document.getElementById("pass").value.trim();
+    let studentId = document.getElementById("studentId").value;
+    let pass = document.getElementById("pass").value;
     let userError = document.getElementById("userError");
     let passError = document.getElementById("passError");
 
@@ -249,6 +249,7 @@ function getStudents(){
                     <td class="border border-slate-300 text-center">
                     <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
                     <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">SUBJECTS</button>
+                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
                 `;
@@ -539,6 +540,156 @@ function dltSubject(dltSub){
                         Swal.fire({
                             icon: "error",
                             title: "Check logs for error",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log(result);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                },
+            });
+        }
+    });
+}
+
+function changePassword(){
+    let oldPass = document.getElementById("oldPass").value;
+    let newPass = document.getElementById("newPass").value;
+    let newPassC = document.getElementById("newPassC").value;
+
+    let button = document.getElementById("changeBtn");
+
+    button.value = "Changing...";
+
+    if(!oldPass || !newPass || !newPassC)
+    {
+        fieldError.classList.remove("hidden");
+        button.value = "CHANGE";
+        return;
+    }
+
+    if(newPass !== newPassC)
+    {
+        document.getElementById("newPass").value = "";
+        document.getElementById("newPassC").value = "";
+        fieldError.innerText = "New Password Doesn't Match";
+        fieldError.classList.remove("hidden");
+        button.value = "CHANGE";
+        return;
+    }
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change password?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText:"Yes",
+        confirmButtonColor: "#d33",
+        cancelButtonText:"No, go back"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: './src/request/request.php',
+                data: {
+                    choice: "changePass",
+                    old_Pass:oldPass,
+                    new_Pass:newPass
+                },
+                success: function (response) {
+                    
+                    let result = JSON.parse(response);   
+                    if (result.status === 'success') {
+                        Swal.fire({
+                            icon: "info",
+                            title: "Password Changed Successfully, Logging out...",
+                            showConfirmButton: false,
+                            timer: 3500
+                        }).then(() => {
+                            document.getElementById("newPass").value = "";
+                            document.getElementById("newPassC").value = "";
+                            document.getElementById("oldPass").value = "";
+                            button.value = "CHANGE";
+                            // window.location.href = '/profile';
+                            $.ajax({
+                                type: "POST",
+                                url: './src/request/request.php',
+                                data: {
+                                    choice: "logout"
+                                },
+                                success: function (response) {
+                                    let result = JSON.parse(response);   
+                                    if (result.status === 'success') {
+                                        window.location.href = '/';
+                                    } else {
+                                        alert(result.message);
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error("AJAX Error:", status, error);
+                                },
+                            });
+                        });                        
+                    } 
+                    else if(result.status === 'invalid'){
+                        document.getElementById("oldPass").value = "";
+                        fieldError.innerText = "Wrong Password";
+                        fieldError.classList.remove("hidden");
+                        button.value = "CHANGE";
+                    }
+                    else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "unexpected error detected",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log(result);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                },
+            });
+        }
+    });
+}
+
+function resetPass(idToRst){
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to reset password?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText:"Yes",
+        confirmButtonColor: "#d33",
+        cancelButtonText:"No, go back"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: './src/request/request.php',
+                data: {
+                    choice: "resetPass",
+                    toReset:idToRst
+                },
+                success: function (response) {
+                    
+                    let result = JSON.parse(response);   
+                    if (result.status === 'success') {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Password Reset Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });                        
+                    } 
+                    else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "unexpected error detected",
                             showConfirmButton: false,
                             timer: 1500
                         });

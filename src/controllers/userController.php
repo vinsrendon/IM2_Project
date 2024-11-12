@@ -113,4 +113,50 @@ class userController{
             return json_encode($th);
         }
     }
+
+    function changePass(){
+        try {
+            $old_pass = htmlspecialchars(strip_tags($_POST['old_Pass']));
+            $hashed = password_hash(htmlspecialchars(strip_tags($_POST['new_Pass'])),PASSWORD_BCRYPT);
+
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL login(:stud_id)");
+            $statement->execute(['stud_id' => $_SESSION['stud_id']]);
+            $user = $statement->fetch(PDO::FETCH_ASSOC);     
+            
+            if ($user && password_verify($old_pass, $user['stud_pass'])) {  
+                
+                $db = new database();
+                $con = $db->initDatabase();
+                
+                $statement = $con->prepare("CALL change_pass(:newPass,:id)");
+                $statement->execute(['newPass' => $hashed,'id'=> $_SESSION['user_id']]);
+                
+                return json_encode(['status' => 'success']);
+            } 
+            else {                
+                return json_encode(['status' => 'invalid']);
+            }
+        }catch (PDOException $th) {
+            return json_encode(['status' => 'error', 'message' => 'error: ' . $th->getMessage()]);
+        }
+    }
+
+    function resetPass(){
+        try {
+            $hashed = password_hash('123123',PASSWORD_BCRYPT);
+
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL reset_pass(:newPass,:id)");
+            $statement->execute(['newPass' => $hashed,'id'=> $_POST['toReset']]);
+                
+            return json_encode(['status' => 'success']);
+        }catch (PDOException $th) {
+            return json_encode(['status' => 'error', 'message' => 'error: ' . $th->getMessage()]);
+        }
+    }
 }
