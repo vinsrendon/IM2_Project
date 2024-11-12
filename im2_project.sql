@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 03:01 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Nov 12, 2024 at 02:13 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,6 +28,10 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject` (IN `subjectCode` VARCHAR(64), IN `subjectName` VARCHAR(128), IN `units` INT, IN `course` VARCHAR(64))   BEGIN
 	INSERT INTO subjects(subject_code,subject_name,units,course)
     VALUES(subjectCode,subjectName,units,course);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `change_pass` (IN `newPass` VARCHAR(128), IN `id` INT)   BEGIN
+	UPDATE users u SET u.stud_pass=newPass WHERE u.user_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `userid` INT)   BEGIN
@@ -85,6 +89,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `register_user` (IN `studid` INT, IN
  
 	INSERT into users_guardian_info(user_id,gfname,gmname,glname,gaddress,gpnumber) VALUES(new_user_id,gfname,gmname,glname,gaddress,gpnumber);
  
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_pass` (IN `pass` VARCHAR(128), IN `id` INT)   BEGIN
+	UPDATE users u SET u.stud_pass=pass WHERE u.user_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `truncate_tables` ()   BEGIN
@@ -199,8 +207,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
 (2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1),
-(29, 20230101, '$2y$10$ELrV7ZBhD5Kw2gYmDtk9suLEQgmpOi863WJmuu7Q/Ub9k5Bb1tDXS', 0, 1),
-(30, 20230102, '$2y$10$IR3wip.oJJwwGP8iC8GsweDlyCdOd3gDGy6kCuLw3xpZSeqRRX2gO', 0, 1);
+(29, 20230101, '$2y$10$iJJ7YXSlBPK0qUW3MKW1j.hutjFUF2KstsCgelreE.a29Vlpr7bBG', 0, 1),
+(30, 20230102, '$2y$10$oWfyf.jyHLxweLwqMWUl5O54P5HF7ztSwmi2qoz4SX9QlYMQHzSTK', 0, 1);
 
 -- --------------------------------------------------------
 
