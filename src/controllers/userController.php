@@ -1,11 +1,30 @@
 <?php 
 
 class userController{
-    function addUser(){
-        try{
-            $db = new database();
-            $con = $db->initDatabase();
 
+    function trackStudId(){
+        $students = json_decode($this->getStudents(),true);
+
+        $last_stud_id = 0;
+
+        foreach ($students as $student) {
+            $last_stud_id = $student['stud_id'];
+        }
+
+        session_start();
+        $_SESSION['lastsid'] = $last_stud_id;
+    }
+    function addUser(){
+        try{            
+            $this->trackStudId();
+
+            $stud_id = 0;
+
+            isset($_POST['stud_id'])? $stud_id = htmlspecialchars(strip_tags($_POST['stud_id'])) : $stud_id=($_SESSION['lastsid']+1);
+
+
+            $db = new database();
+            $con = $db->initDatabase();    
             
             $hashed = password_hash(htmlspecialchars(strip_tags($_POST['stud_pass'])),PASSWORD_BCRYPT);
 
@@ -14,7 +33,7 @@ class userController{
             :fname,:mname,:lname,:DOB,:address,:pnumber,
             :gfname,:gmname,:glname,:gaddress,:gpnumber)");
             $statement->execute([
-                'stud_id' => htmlspecialchars(strip_tags($_POST['stud_id'])),
+                'stud_id' => $stud_id,
                 'stud_pass' => $hashed,
                 'Role' => 0,
                 'Flag' => 1,
@@ -42,14 +61,25 @@ class userController{
         }
     }
 
-    function getStudents(){        
+    function getStudents(){      
         try {
+
             $db = new database();
             $con = $db->initDatabase();
             
             $statement = $con->prepare("CALL get_students()");
             $statement->execute();
-            $user = $statement->fetchAll();
+            $user = $statement->fetchAll();      
+            
+            $last_stud_id = 0;
+
+            foreach ($user as $student) {
+                $last_stud_id = $student['stud_id'];
+            }
+
+            session_start();
+            $_SESSION['lastsid'] = $last_stud_id;
+
 
             return json_encode($user);
         } catch (PDOException $th) {
@@ -85,6 +115,32 @@ class userController{
         }
     }
 
+    function unsetTempData(){
+        
+        try {
+            session_start();
+
+            unset(
+                $_SESSION['temp_stud_id'],
+                $_SESSION['temp_fname'],
+                $_SESSION['temp_mname'],
+                $_SESSION['temp_lname'],
+                $_SESSION['temp_DOB'],
+                $_SESSION['temp_address'],
+                $_SESSION['temp_pnumber'],
+                $_SESSION['temp_gfname'],
+                $_SESSION['temp_gmname'],
+                $_SESSION['temp_glname'],
+                $_SESSION['temp_gaddress'],
+                $_SESSION['temp_gpnumber']
+            );
+
+            return json_encode(['status' => 'success']);
+        } catch (\Exception $th) {
+            return json_encode(['status' => 'error', $th]);
+        }
+    }
+
     function getStudentById(){
         try {
             $db = new database();
@@ -93,7 +149,7 @@ class userController{
             $statement = $con->prepare("CALL get_user(:user_id)");
             $statement->execute(['user_id' => $_POST['user_id']]);
             $user = $statement->fetch(PDO::FETCH_ASSOC);
-
+            
             session_start();
             $_SESSION['temp_stud_id'] = $user['stud_id'];
             $_SESSION['temp_fname'] = $user['fname'];
@@ -107,8 +163,8 @@ class userController{
             $_SESSION['temp_glname'] = $user['glname'];
             $_SESSION['temp_gaddress'] = $user['gaddress'];
             $_SESSION['temp_gpnumber'] = $user['gpnumber'];
-
-            return json_encode(['status' => 'success']);
+            
+            return json_encode(['status' => 'success', $user]);
         } catch (PDOException $th) {
             return json_encode($th);
         }

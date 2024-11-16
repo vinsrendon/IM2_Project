@@ -21,7 +21,7 @@
             <input class="peer h-full w-full outline-none text-sm text-gray-700 p-2" type="text" id="search" placeholder="Search Subject..."/>            
         </div>
         <div>
-            <a href="/addsubject"><button class="mt-3 h-12 ml-3 bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD SUBJECT</button></a>
+            <a href="/addsubject"><button class="mt-3 h-12 ml-3 bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD NEW SUBJECT</button></a>
         </div>
     </div>
     

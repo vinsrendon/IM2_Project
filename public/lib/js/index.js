@@ -99,7 +99,7 @@ function logout(){
 }
 
 function addUser(){
-    let stud_id = document.getElementById("sid").value.trim();
+    // let stud_id = document.getElementById("sid").value.trim();
     let stud_pass = document.getElementById("password").value.trim();
     let stud_passC = document.getElementById("passwordC").value.trim();
 
@@ -119,7 +119,7 @@ function addUser(){
     fieldError.classList.add("hidden");
     passError.classList.add("hidden");
 
-    if (!stud_id ||!stud_pass ||!stud_passC ||!fname ||!lname ||!DOB 
+    if (!stud_pass ||!stud_passC ||!fname ||!lname ||!DOB 
         ||!address ||!pnumber ||!gfname ||!glname ||!gaddress ||!gpnumber) {
         fieldError.classList.remove("hidden");
         return;
@@ -135,7 +135,6 @@ function addUser(){
         url: './src/request/request.php',
         data: {
             choice: "addUser",
-            stud_id: stud_id,
             stud_pass: stud_pass,
             fname: fname,
             mname: mname,
@@ -150,6 +149,8 @@ function addUser(){
             gpnumber: gpnumber
         },
         success: function (response) {
+            console.log(response);
+            
             let result = JSON.parse(response);  
 
             if (result.status === 'success') {
@@ -190,6 +191,8 @@ function addUser(){
                         glname.value = "";
                         gaddress.value = "";
                         gpnumber.value = "";
+
+                        window.location.href = '/admin';
                     });
                                           
             }
@@ -213,7 +216,6 @@ function addUser(){
     });     
 }
 
-
 function getStudents(){
     let tbody = document.getElementById("studentsList");    
 
@@ -224,8 +226,9 @@ function getStudents(){
             choice: 'getStudents'
         },
         success: function(response) {
-            response = JSON.parse(response);
-            // console.log(response);            
+            // console.log(response);
+            
+            response = JSON.parse(response); 
 
             response.forEach(student => {
                 let newRow = tbody.insertRow();
@@ -248,7 +251,7 @@ function getStudents(){
                     <td class="border border-slate-300 text-center">${student.mname}</td>
                     <td class="border border-slate-300 text-center">
                     <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
-                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="test(${student.user_id})">SUBJECTS</button>
+                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getSubjectsBySid(${student.user_id})">SUBJECTS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
@@ -270,7 +273,7 @@ function getStudentById(studentId){
             user_id:studentId
         },
         success: function(response) {
-            console.log(response);
+            // console.log(response);
             
             response = JSON.parse(response);   
 
@@ -505,6 +508,11 @@ function getSubjects(){
             console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
         }
     });    
+}
+
+function getSubjectsBySid(sid){
+    alert(sid);
+    window.location.href = "/viewstudentsubject";
 }
 
 function dltSubject(dltSub){

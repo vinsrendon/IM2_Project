@@ -22,6 +22,8 @@ class authController{
                     $_SESSION['Role'] = $user['Role'];
                     $_SESSION['Flag'] = $user['Flag'];
                     $_SESSION['isLoggedin'] = true;
+
+                    
                     $db = new database();
                     $con = $db->initDatabase();
                     

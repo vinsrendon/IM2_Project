@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 02:13 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Nov 16, 2024 at 09:21 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,7 +96,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_pass` (IN `pass` VARCHAR(128)
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `truncate_tables` ()   BEGIN
-    TRUNCATE TABLE subjects;
     TRUNCATE TABLE users;
     TRUNCATE TABLE users_info;
     TRUNCATE TABLE users_guardian_info;
@@ -208,7 +207,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
 (2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1),
 (29, 20230101, '$2y$10$iJJ7YXSlBPK0qUW3MKW1j.hutjFUF2KstsCgelreE.a29Vlpr7bBG', 0, 1),
-(30, 20230102, '$2y$10$oWfyf.jyHLxweLwqMWUl5O54P5HF7ztSwmi2qoz4SX9QlYMQHzSTK', 0, 1);
+(30, 20230102, '$2y$10$oWfyf.jyHLxweLwqMWUl5O54P5HF7ztSwmi2qoz4SX9QlYMQHzSTK', 0, 1),
+(32, 20230103, '$2y$10$xh68PXHDA1LmooJZwSUk8erd6xOyJzQGn/e8Zh1b2Z4DmWaztxJM6', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -232,7 +232,8 @@ CREATE TABLE `users_guardian_info` (
 INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gaddress`, `gpnumber`) VALUES
 (2, 'admin gfname', 'admin gmname', 'admin glname', 'admin gaddress', 'admin gpnumber'),
 (29, 'MARK', '', 'DOE', 'GABI CORDOVA', '09347537656'),
-(30, 'GEORGE', '', 'REYES', 'PILIPOG', '09785623786');
+(30, 'GEORGE', '', 'REYES', 'PILIPOG', '09785623786'),
+(32, 'GEORGE', '', 'AMISTAD', 'GABI', '09845645645');
 
 -- --------------------------------------------------------
 
@@ -257,7 +258,8 @@ CREATE TABLE `users_info` (
 INSERT INTO `users_info` (`user_id`, `fname`, `mname`, `lname`, `DOB`, `address`, `pnumber`) VALUES
 (2, 'admin fname', 'admin mname', 'admin lname', '2003-12-26', 'admin adress', 'admin pnumber'),
 (29, 'JOHN', '', 'DOE', '2001-05-22', 'GABI CORDOVA', '07864283756'),
-(30, 'JOHN', '', 'REYES', '2001-04-25', 'PILIPOG', '09187346573');
+(30, 'JOHN', '', 'REYES', '2001-04-25', 'PILIPOG', '09187346573'),
+(32, 'JOHN', '', 'AMISTAD', '2001-11-17', 'GABI', '09237462786');
 
 -- --------------------------------------------------------
 
@@ -343,7 +345,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

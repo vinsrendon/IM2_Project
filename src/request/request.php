@@ -60,7 +60,11 @@ if (isset($_POST['choice'])) {
         case 'dltSubject':
             $ctr = new subjectController();
             echo $ctr->dltSubject();
-            break;        
+            break;    
+        case 'unsetTempData':
+            $ctr = new userController();
+            echo $ctr->unsetTempData(); 
+            break;    
         default:
             echo 'cannot handle request';
             break;

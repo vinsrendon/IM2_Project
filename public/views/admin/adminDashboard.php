@@ -9,7 +9,10 @@
     <title>ADMIN DASHBOARD</title>
 </head>
 <body onload="getStudents()">
-    <?php require_once 'adminNav.php'?>    
+    <?php require_once 'adminNav.php'?>
+
+    <h1 class="text-center mt-5">LAST STUDENT ID: <?php echo $_SESSION['lastsid']?></h1> 
+
     
     <div class='w-full sm:px-3 flex sm:justify-around justify-center flex-wrap'>
         <div class="mt-3 relative flex w-3/4 h-12 rounded-lg focus-within:shadow-lg bg-blue-500 border overflow-hidden">
