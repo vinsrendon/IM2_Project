@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2024 at 09:21 PM
+-- Generation Time: Nov 17, 2024 at 12:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,7 +47,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` ()   BEGIN
 
-SELECT u.user_id,u.stud_id,u.Flag,ui.fname,ui.mname,ui.lname FROM users u JOIN users_info ui ON u.user_id=ui.user_id WHERE u.Role=0;
+SELECT u.user_id,u.stud_id,u.Flag,u.Role,ui.fname,ui.mname,ui.lname FROM users u JOIN users_info ui ON u.user_id=ui.user_id ;
 
 END$$
 
@@ -55,6 +55,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_subjects` ()   BEGIN
 
 SELECT * FROM subjects;
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_sub_by_sid` (IN `sid` INT)   BEGIN 
+	SELECT * FROM users_subjects us JOIN subjects s ON us.subject_id = s.subject_id WHERE us.stud_id = sid;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user` (IN `userid` INT)   BEGIN
@@ -205,10 +209,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
-(2, 123, '$2y$10$9fIGy9WvtYhK5TCHFSWJ1.CVcR5dpm1Pggg8nz28MHXAnegcY7kLC', 1, 1),
-(29, 20230101, '$2y$10$iJJ7YXSlBPK0qUW3MKW1j.hutjFUF2KstsCgelreE.a29Vlpr7bBG', 0, 1),
-(30, 20230102, '$2y$10$oWfyf.jyHLxweLwqMWUl5O54P5HF7ztSwmi2qoz4SX9QlYMQHzSTK', 0, 1),
-(32, 20230103, '$2y$10$xh68PXHDA1LmooJZwSUk8erd6xOyJzQGn/e8Zh1b2Z4DmWaztxJM6', 0, 1);
+(1, 123, '$2y$10$fz4J03yoQiaFcSAHd2LJK.01cNmwJ80.mVTLbrnPbH14XpuNzEdD6', 1, 1),
+(3, 20240001, '$2y$10$I0OFL63lJQnJfLNDexAmyuyYurKxHr4u.6kaS/ol/8istgqpUh1eq', 0, 1),
+(4, 20240002, '$2y$10$C.TVHCmyfwZD29.NGnUCFeCaL5x0LnPg88vax6BrAt.DgPmb6QhDW', 0, 1),
+(5, 20240003, '$2y$10$iSnys6XLv8RumV0ZeaXhG.R3mzrMfF0OlJYhyHcqOXC75DzxTU9qW', 0, 1),
+(6, 20240004, '$2y$10$bzPHJbG29BNic1Ko9q4L0egFaYh8kv8xxreIS1/LEYW03KUjEH/T6', 0, 1),
+(7, 20240005, '$2y$10$2k20vYAZ2oqR88bgdy21l.Q1P31onMyfOeFuuESiLvbS9wrj.saRe', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -230,10 +236,12 @@ CREATE TABLE `users_guardian_info` (
 --
 
 INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gaddress`, `gpnumber`) VALUES
-(2, 'admin gfname', 'admin gmname', 'admin glname', 'admin gaddress', 'admin gpnumber'),
-(29, 'MARK', '', 'DOE', 'GABI CORDOVA', '09347537656'),
-(30, 'GEORGE', '', 'REYES', 'PILIPOG', '09785623786'),
-(32, 'GEORGE', '', 'AMISTAD', 'GABI', '09845645645');
+(1, 'ADMIN GFNAME', 'ADMIN GMNAME', 'ADMIN GLNAME', 'ADMIN GADDRESS', 'ADMIN GPNUMBER'),
+(3, 'GEORGE', '', 'DOE', 'GABI', '09578646364'),
+(4, 'RYAN', '', 'BAUTISTA', 'GABI', '09176523571'),
+(5, 'SHERIL', '', 'SERNA', 'PILIPOG', '09178263472'),
+(6, 'MARY', '', 'MONTéS', 'ALEGRIA', '09675236427'),
+(7, 'ADMIN II F', 'ADMIN II M', 'ADMIN II L', 'ADMIN II', '09123762634');
 
 -- --------------------------------------------------------
 
@@ -256,10 +264,12 @@ CREATE TABLE `users_info` (
 --
 
 INSERT INTO `users_info` (`user_id`, `fname`, `mname`, `lname`, `DOB`, `address`, `pnumber`) VALUES
-(2, 'admin fname', 'admin mname', 'admin lname', '2003-12-26', 'admin adress', 'admin pnumber'),
-(29, 'JOHN', '', 'DOE', '2001-05-22', 'GABI CORDOVA', '07864283756'),
-(30, 'JOHN', '', 'REYES', '2001-04-25', 'PILIPOG', '09187346573'),
-(32, 'JOHN', '', 'AMISTAD', '2001-11-17', 'GABI', '09237462786');
+(1, 'ADMIN FNAME', 'ADMIN MNAME', 'ADMIN LNAME', '1990-01-01', 'ADMIN ADDRESS', '09123456789'),
+(3, 'JOHN', '', 'DOE', '2001-11-17', 'GABI', '09786347856'),
+(4, 'MICHAEL', '', 'BAUTISTA', '2000-11-17', 'GABI', '09675624652'),
+(5, 'ELLEN', '', 'SERNA', '1991-11-17', 'PILIPOG', '09782634623'),
+(6, 'EDELIRA', '', 'MONTéS', '2001-11-17', 'ALEGRIA', '09736423764'),
+(7, 'ADMIN II F', 'ADMIN II M', 'ADMIN II L', '2007-11-17', 'ADMIN II', '09123762364');
 
 -- --------------------------------------------------------
 
@@ -271,6 +281,13 @@ CREATE TABLE `users_subjects` (
   `stud_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users_subjects`
+--
+
+INSERT INTO `users_subjects` (`stud_id`, `subject_id`) VALUES
+(20240001, 2);
 
 -- --------------------------------------------------------
 
@@ -345,7 +362,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

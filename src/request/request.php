@@ -15,6 +15,9 @@ if (isset($_POST['choice'])) {
 
             $ctr = new authController();
             $ctr->login();
+
+            $ctr = new userController();
+            $ctr->trackStudId(); 
             break;
         case 'logout':            
             $ctr = new authController();
@@ -27,6 +30,7 @@ if (isset($_POST['choice'])) {
         case 'getStudents':
             $ctr = new userController();
             echo $ctr->getStudents(); 
+            $ctr->trackStudId(); 
             break;
         case 'getStudentById':
             $ctr = new userController();
@@ -61,10 +65,14 @@ if (isset($_POST['choice'])) {
             $ctr = new subjectController();
             echo $ctr->dltSubject();
             break;    
-        case 'unsetTempData':
-            $ctr = new userController();
-            echo $ctr->unsetTempData(); 
-            break;    
+        case 'getSubjectsBySid':
+            $ctr = new subjectController();
+            echo $ctr->getSubjectsBySid();
+            break;
+        case 'set_stud_id_to_get_sub':
+            $ctr = new subjectController();
+            echo $ctr->setStudSubToGet();
+            break;
         default:
             echo 'cannot handle request';
             break;

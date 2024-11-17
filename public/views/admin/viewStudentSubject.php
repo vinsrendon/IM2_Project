@@ -7,16 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Subjects</title>
 </head>
-<body>
+<body onload="getStudSub(<?php echo $_SESSION['stud_id_to_get_sub']?>)">
     <?php require_once 'adminNav.php'?>
 
     <div class='w-full sm:px-3 flex sm:justify-around justify-center flex-wrap'>
         
         <div>
-            <a href=""><button class="mt-3 h-12 ml-3 bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD SUBJECT</button></a>
+            <a href="/addSubtoStud"><button class="mt-3 h-12 ml-3 bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD SUBJECT</button></a>
         </div>
     </div>
-
+    <h1 class="text-center text-xl mt-2">STUDENT ID: <?php echo $_SESSION['stud_id_to_get_sub']?></h1>
     <div class="flex justify-around mt-5 sm:px-3">
         <table class="w-full" id="subjectsTbl">
             <thead>

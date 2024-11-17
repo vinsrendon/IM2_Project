@@ -54,4 +54,31 @@ class subjectController{
             return json_encode($th);
         }
     }
+
+    function setStudSubToGet(){
+        try {
+            session_start();
+            $_SESSION['stud_id_to_get_sub'] = $_POST['stud_id_to_get'];
+
+            return json_encode(['status' => 'success']);
+        } catch (\Exception $th) {
+            return json_encode($th);
+        }
+        
+    }
+    function getSubjectsBySid(){        
+        try {            
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL get_sub_by_sid(:sid)");
+            $statement->execute(['sid'=>$_POST['StudSubId']]);
+            $user = $statement->fetchAll();
+
+
+            return json_encode($user);
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
+    }
 }

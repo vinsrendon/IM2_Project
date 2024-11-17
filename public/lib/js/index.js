@@ -103,6 +103,8 @@ function addUser(){
     let stud_pass = document.getElementById("password").value.trim();
     let stud_passC = document.getElementById("passwordC").value.trim();
 
+    let userRole = document.getElementById("userRole").value.trim()
+
     let fname = document.getElementById("fname").value.trim();
     let mname = document.getElementById("mname").value.trim();
     let lname = document.getElementById("lname").value.trim();
@@ -139,6 +141,7 @@ function addUser(){
             fname: fname,
             mname: mname,
             lname: lname,
+            Role:userRole,
             DOB: DOB,
             address: address,
             pnumber: pnumber,
@@ -243,19 +246,21 @@ function getStudents(){
                 else{
                     buttonCTA = `deactivateStud(${student.user_id})`;
                     btnTxt = "DEACTIVATE";
-                }                  
-                newRow.innerHTML=`
+                }         
+                if(student.Role === 0){
+                    newRow.innerHTML=`
                     <td class="border border-slate-300 text-center">${student.stud_id}</td>
                     <td class="border border-slate-300 text-center">${student.lname}</td>
                     <td class="border border-slate-300 text-center">${student.fname}</td>
                     <td class="border border-slate-300 text-center">${student.mname}</td>
                     <td class="border border-slate-300 text-center">
                     <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
-                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getSubjectsBySid(${student.user_id})">SUBJECTS</button>
+                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="set_stud_id_to_get_sub(${student.stud_id})">SUBJECTS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
                     <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
-                `;
+                    `;
+                }                
             });
         },
         error: function(xhr, status, error) {
@@ -510,9 +515,61 @@ function getSubjects(){
     });    
 }
 
-function getSubjectsBySid(sid){
-    alert(sid);
-    window.location.href = "/viewstudentsubject";
+function set_stud_id_to_get_sub(sid){
+    
+    // console.log(sid);
+    
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: 'set_stud_id_to_get_sub',
+            stud_id_to_get:sid
+        },
+        success: function(response) {
+            response = JSON.parse(response);
+            
+            response.status === 'success' ? window.location.href='/viewstudentsubject' : console.log(response);   
+           
+        },
+        error: function(xhr, status, error) {
+            console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
+        }
+    }); 
+}
+
+function getStudSub(sid){
+    let tbody = document.getElementById("subjectsList");    
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: 'getSubjectsBySid',
+            StudSubId:sid
+        },
+        success: function(response) {
+            
+            response = JSON.parse(response);
+
+            response.forEach(subject => {
+                let newRow = tbody.insertRow();
+
+                newRow.innerHTML=`
+                    <td class="border border-slate-300 text-center">${subject.subject_code}</td>
+                    <td class="border border-slate-300 text-center">${subject.subject_name}</td>
+                    <td class="border border-slate-300 text-center">${subject.units}</td>
+                    <td class="border border-slate-300 text-center">${subject.course}</td>
+                    <td class="border border-slate-300 text-center">
+                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
+                    </td>
+                `;
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
+        }
+    });
 }
 
 function dltSubject(dltSub){
@@ -710,4 +767,52 @@ function resetPass(idToRst){
             });
         }
     });
+}
+
+function loadSubjects(){
+    let select = document.getElementById("subToAdd");    
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: 'getSubjects'
+        },
+        success: function(response) {
+            // console.log(response);           
+
+            response = JSON.parse(response);
+
+            select.innerHTML = "";
+
+            let defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "Select a Subject";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            select.appendChild(defaultOption);
+
+            response.forEach(subject => {
+                let option = document.createElement("option");
+                option.value = subject.subject_id;
+                option.text = `${subject.subject_code} - ${subject.subject_name}`;
+                select.appendChild(option);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("An error occurred. Please try again later.",xhr,"\n",status,"\n",error);
+        }
+    });    
+}
+
+function addSubjectToUser(){
+    let subToAdd = document.getElementById("subToAdd").value.trim()
+
+    fieldError.classList.add("hidden");
+
+    if(!subToAdd){
+        fieldError.classList.remove("hidden");
+        return;
+    }
+    alert(subToAdd);
 }
