@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2024 at 12:49 PM
+-- Generation Time: Nov 20, 2024 at 10:14 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,6 +30,31 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject` (IN `subjectCode` VARC
     VALUES(subjectCode,subjectName,units,course);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject_to_student` (IN `sid` INT, IN `subId` INT)   BEGIN
+DECLARE subjectCount INT;
+
+    SELECT COUNT(*) INTO subjectCount 
+    FROM users_subjects 
+    WHERE stud_id = sid;
+
+    IF subjectCount >= 10 THEN
+        SIGNAL SQLSTATE '45000';
+    ELSE
+        -- Check if the combination already exists
+        IF EXISTS (
+            SELECT 1 
+            FROM users_subjects 
+            WHERE stud_id = sid AND subject_id = subId
+        ) THEN
+            SIGNAL SQLSTATE '23000';
+        ELSE
+            INSERT INTO users_subjects (stud_id, subject_id) 
+            VALUES (sid, subId);
+        END IF;
+    END IF;
+
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `change_pass` (IN `newPass` VARCHAR(128), IN `id` INT)   BEGIN
 	UPDATE users u SET u.stud_pass=newPass WHERE u.user_id = id;
 END$$
@@ -42,6 +67,12 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_subject` (IN `subId` INT)   BEGIN
 
 DELETE FROM subjects WHERE subjects.subject_id = subId;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `dltStudSub` (IN `sid` INT, IN `subId` INT)   BEGIN
+
+DELETE FROM users_subjects WHERE stud_id = sid AND subject_id=subId;
 
 END$$
 
@@ -287,7 +318,20 @@ CREATE TABLE `users_subjects` (
 --
 
 INSERT INTO `users_subjects` (`stud_id`, `subject_id`) VALUES
-(20240001, 2);
+(20240001, 2),
+(20240002, 3),
+(20240002, 5),
+(20240002, 6),
+(20240004, 9),
+(20240004, 11),
+(20240004, 15),
+(20240004, 3),
+(20240004, 2),
+(20240004, 5),
+(20240004, 12),
+(20240004, 16),
+(20240004, 17),
+(20240004, 4);
 
 -- --------------------------------------------------------
 

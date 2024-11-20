@@ -20,8 +20,7 @@ $routesAdmin =[
     '/viewstudentinfo' => 'public/views/admin/viewStudentInfo.php',
     '/viewstudentsubject' => 'public/views/admin/viewStudentSubject.php',
     '/adminprofile' => 'public/views/admin/adminProfile.php',
-    '/changepass' => 'public/views/changepassword.php',
-    '/addSubtoStud' => 'public/views/admin/addSubjectToStudent.php'
+    '/changepass' => 'public/views/changepassword.php'
 ];
 
 $routesGlobal = [

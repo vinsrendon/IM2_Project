@@ -561,7 +561,7 @@ function getStudSub(sid){
                     <td class="border border-slate-300 text-center">${subject.units}</td>
                     <td class="border border-slate-300 text-center">${subject.course}</td>
                     <td class="border border-slate-300 text-center">
-                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
+                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltStudSub(${sid},${subject.subject_id})">DELETE</button>
                     </td>
                 `;
             });
@@ -805,7 +805,16 @@ function loadSubjects(){
     });    
 }
 
-function addSubjectToUser(){
+function vStudSubRstTable(){
+    const table = document.getElementById("subjectsTbl");
+    const tbody = table.getElementsByTagName("tbody")[0];
+
+    while (tbody.rows.length > 0) {
+        tbody.deleteRow(0);
+    }
+}
+
+function addSubjectToUser(sid){
     let subToAdd = document.getElementById("subToAdd").value.trim()
 
     fieldError.classList.add("hidden");
@@ -814,5 +823,107 @@ function addSubjectToUser(){
         fieldError.classList.remove("hidden");
         return;
     }
-    alert(subToAdd);
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: "addSubToStud",
+            stud_id: sid,
+            sub_Id: subToAdd
+        },
+        success: function (response) {            
+            let result = JSON.parse(response);  
+            if (result.status === 'success') {
+                Swal.fire({
+                    icon: "success",
+                    title: "Subject Added Successfully",
+                    showConfirmButton: false,
+                    timer: 1000
+                }).then(() => {
+                    vStudSubRstTable();
+                    getStudSub(sid);
+                    loadSubjects();
+                });
+                                          
+            }
+            else if(result.status === 'duplicate'){
+                Swal.fire({
+                    icon: "error",
+                    title: "Duplicate Entry",        
+                    text: "Subject already exist",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }     
+            else if(result.status === 'limit'){
+                Swal.fire({
+                    icon: "error",
+                    title: "User Subject Limit",        
+                    text: "User has reached the max allowed subject",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    loadSubjects();
+                });
+            }
+            else
+            {
+                console.log(result);                
+            }           
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+        },
+    });
+}
+
+function dltStudSub(sid,subId){
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to delete subject?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText:"Yes",
+        confirmButtonColor: "#d33",
+        cancelButtonText:"No, go back"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: './src/request/request.php',
+                data: {
+                    choice: "dltStudSub",
+                    stud_id:sid,
+                    sub_id:subId
+                },
+                success: function (response) {
+                    let result = JSON.parse(response);   
+                    if (result.status === 'success') {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Subject Deleted Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            vStudSubRstTable();
+                            getStudSub(sid);
+                            loadSubjects();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Check logs",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log(result);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                },
+            });
+        }
+    });
 }

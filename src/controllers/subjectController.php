@@ -81,4 +81,43 @@ class subjectController{
             return json_encode($th);
         }
     }
+
+    function addSubToStud(){
+        try{
+            $db = new database();
+            $con = $db->initDatabase();
+
+            $statement = $con->prepare("CALL add_subject_to_student(:sid,:subId)");
+            $statement->execute([
+                'sid' => htmlspecialchars(strip_tags($_POST['stud_id'])),
+                'subId' => htmlspecialchars(strip_tags($_POST['sub_Id']))]);
+
+            return json_encode(['status' => 'success']);
+        }
+        catch (PDOException $th) {            
+            if ($th->getCode() == 23000) {
+                return json_encode(['status' => 'duplicate']);
+            } 
+            else if($th->getCode() == 45000){
+                return json_encode(['status' => 'limit']);
+            }
+            else {
+                return json_encode($th);
+            }
+        }
+    }
+
+    function dltStudSub(){
+        try {
+            $db = new database();
+            $con = $db->initDatabase();
+            
+            $statement = $con->prepare("CALL dltStudSub(:sid,:sub_id)");
+            $statement->execute(['sid'=>$_POST['stud_id'],'sub_id'=>$_POST['sub_id']]);
+
+            return json_encode(['status' => 'success']);
+        } catch (PDOException $th) {
+            return json_encode($th);
+        }
+    }
 }

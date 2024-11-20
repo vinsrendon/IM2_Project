@@ -73,6 +73,14 @@ if (isset($_POST['choice'])) {
             $ctr = new subjectController();
             echo $ctr->setStudSubToGet();
             break;
+        case 'addSubToStud':
+            $ctr = new subjectController();
+            echo $ctr->addSubToStud();
+            break;
+        case 'dltStudSub':
+            $ctr = new subjectController();
+            echo $ctr->dltStudSub();
+            break;
         default:
             echo 'cannot handle request';
             break;
