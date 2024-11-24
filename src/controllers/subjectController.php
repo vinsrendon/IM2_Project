@@ -87,10 +87,14 @@ class subjectController{
             $db = new database();
             $con = $db->initDatabase();
 
-            $statement = $con->prepare("CALL add_subject_to_student(:sid,:subId)");
+            $statement = $con->prepare("CALL add_subject_to_student(:sid,:subId,:time,:room,:day)");
             $statement->execute([
                 'sid' => htmlspecialchars(strip_tags($_POST['stud_id'])),
-                'subId' => htmlspecialchars(strip_tags($_POST['sub_Id']))]);
+                'subId' => htmlspecialchars(strip_tags($_POST['sub_Id'])),
+                'time' => htmlspecialchars(strip_tags($_POST['time'])),
+                'room' => htmlspecialchars(strip_tags($_POST['room'])),
+                'day' => htmlspecialchars(strip_tags($_POST['day']))
+            ]);
 
             return json_encode(['status' => 'success']);
         }
@@ -100,6 +104,10 @@ class subjectController{
             } 
             else if($th->getCode() == 45000){
                 return json_encode(['status' => 'limit']);
+            }
+            else if($th->getCode() == 23001)
+            {
+                return json_encode(['status' => 'conflict']);
             }
             else {
                 return json_encode($th);

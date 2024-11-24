@@ -559,7 +559,9 @@ function getStudSub(sid){
                     <td class="border border-slate-300 text-center">${subject.subject_code}</td>
                     <td class="border border-slate-300 text-center">${subject.subject_name}</td>
                     <td class="border border-slate-300 text-center">${subject.units}</td>
-                    <td class="border border-slate-300 text-center">${subject.course}</td>
+                    <td class="border border-slate-300 text-center">${subject.time}</td>
+                    <td class="border border-slate-300 text-center">${subject.day}</td>
+                    <td class="border border-slate-300 text-center">${subject.room}</td>
                     <td class="border border-slate-300 text-center">
                     <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltStudSub(${sid},${subject.subject_id})">DELETE</button>
                     </td>
@@ -778,11 +780,10 @@ function loadSubjects(){
         data: {
             choice: 'getSubjects'
         },
-        success: function(response) {
-            // console.log(response);           
+        success: function(response) {  
 
             response = JSON.parse(response);
-
+            
             select.innerHTML = "";
 
             let defaultOption = document.createElement("option");
@@ -793,6 +794,7 @@ function loadSubjects(){
             select.appendChild(defaultOption);
 
             response.forEach(subject => {
+                
                 let option = document.createElement("option");
                 option.value = subject.subject_id;
                 option.text = `${subject.subject_code} - ${subject.subject_name}`;
@@ -816,10 +818,13 @@ function vStudSubRstTable(){
 
 function addSubjectToUser(sid){
     let subToAdd = document.getElementById("subToAdd").value.trim()
+    let dayToAdd = document.getElementById("day").value.trim()
+    let timeToAdd = document.getElementById("time").value.trim()
+    let roomToAdd = document.getElementById("room").value.trim()
 
     fieldError.classList.add("hidden");
 
-    if(!subToAdd){
+    if(!subToAdd || !dayToAdd || !timeToAdd || !roomToAdd){
         fieldError.classList.remove("hidden");
         return;
     }
@@ -830,7 +835,10 @@ function addSubjectToUser(sid){
         data: {
             choice: "addSubToStud",
             stud_id: sid,
-            sub_Id: subToAdd
+            sub_Id: subToAdd,
+            day: dayToAdd,
+            time: timeToAdd,
+            room: roomToAdd
         },
         success: function (response) {            
             let result = JSON.parse(response);  
@@ -844,6 +852,7 @@ function addSubjectToUser(sid){
                     vStudSubRstTable();
                     getStudSub(sid);
                     loadSubjects();
+                    resetVSSPage();
                 });
                                           
             }
@@ -851,9 +860,12 @@ function addSubjectToUser(sid){
                 Swal.fire({
                     icon: "error",
                     title: "Duplicate Entry",        
-                    text: "Subject already exist",
+                    text: "Load already exist",
                     showConfirmButton: false,
                     timer: 1500
+                }).then(()=>{
+                    loadSubjects();
+                    resetVSSPage();
                 });
             }     
             else if(result.status === 'limit'){
@@ -865,6 +877,19 @@ function addSubjectToUser(sid){
                     timer: 1500
                 }).then(() => {
                     loadSubjects();
+                    resetVSSPage();
+                });
+            }
+            else if(result.status === 'conflict'){
+                Swal.fire({
+                    icon: "error",
+                    title: "User Time Conflict",        
+                    text: "User has a subject already in that time and day",
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then(() => {
+                    loadSubjects();
+                    resetVSSPage();
                 });
             }
             else
@@ -926,4 +951,90 @@ function dltStudSub(sid,subId){
             });
         }
     });
+}
+
+function resetVSSPage(){
+    let select2 = document.getElementById("room"); 
+    let select3 = document.getElementById("day"); 
+    select2.selectedIndex = 0;
+    select3.selectedIndex = 0;
+    
+    let select = document.getElementById("time");  
+    select.innerHTML = "";
+
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.text = "Select Time";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    select.appendChild(defaultOption);
+}
+
+function setTime(){
+    let day = document.getElementById("day").value.trim();
+    let select = document.getElementById("time");  
+    
+    $MWF = ["7:00-8:00 AM",
+        "8:00-9:00 AM",
+        "9:00-10:00 AM",
+        "10:00-11:00 AM",
+        "11:00-12:00 PM",
+        "12:00-1:00 PM",
+        "1:00-2:00 PM",
+        "2:00-3:00 PM",
+        "3:00-4:00 PM",
+        "4:00-5:00 PM",
+        "5:00-6:00 PM",
+        "6:00-7:00 PM",
+        "7:00-8:00 PM"
+    ]
+    $TTH = [
+        "7:30-9:00 AM",
+        "9:00-10:30 AM",
+        "10:30-12:00 PM",
+        "12:00-1:30 PM",
+        "1:30-3:00 PM",
+        "3:00-4:30 PM",
+        "4:30-6:00 PM",
+        "6:00-7:30 PM"
+    ]
+    $SAT = [
+        "7:00-10:00 AM",
+        "10:00-1:00 PM",
+        "1:00-4:00 PM",
+        "4:00-7:00 PM"
+    ]
+    select.innerHTML = "";
+
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.text = "Select Time";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    select.appendChild(defaultOption);
+
+    if(day === 'MWF'){
+        $MWF.forEach(time => {            
+            let option = document.createElement("option");
+            option.value = time;
+            option.text = time;
+            select.appendChild(option);
+        });
+    }
+    else if(day === 'TTH'){
+        $TTH.forEach(time => {            
+            let option = document.createElement("option");
+            option.value = time;
+            option.text = time;
+            select.appendChild(option);
+        });
+    }
+    else if(day === 'SAT'){
+        $SAT.forEach(time => {            
+            let option = document.createElement("option");
+            option.value = time;
+            option.text = time;
+            select.appendChild(option);
+        });
+    }
 }

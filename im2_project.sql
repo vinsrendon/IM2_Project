@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 10:14 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Nov 24, 2024 at 07:10 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject` (IN `subjectCode` VARC
     VALUES(subjectCode,subjectName,units,course);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject_to_student` (IN `sid` INT, IN `subId` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_subject_to_student` (IN `sid` INT, IN `subId` INT, IN `time` VARCHAR(20), IN `room` VARCHAR(25), IN `day` VARCHAR(10))   BEGIN
 DECLARE subjectCount INT;
 
     SELECT COUNT(*) INTO subjectCount 
@@ -44,12 +44,18 @@ DECLARE subjectCount INT;
         IF EXISTS (
             SELECT 1 
             FROM users_subjects 
-            WHERE stud_id = sid AND subject_id = subId
+            WHERE stud_id = sid AND subject_id = subId AND time = time AND room = room AND day = day
         ) THEN
             SIGNAL SQLSTATE '23000';
+        ELSEIF EXISTS (
+            SELECT 1 
+            FROM users_subjects 
+            WHERE stud_id = sid AND time = time AND day = day
+        ) THEN
+            SIGNAL SQLSTATE '23001';
         ELSE
-            INSERT INTO users_subjects (stud_id, subject_id) 
-            VALUES (sid, subId);
+            INSERT INTO users_subjects (stud_id, subject_id,time,room,day) 
+            VALUES (sid, subId, time, room ,day);
         END IF;
     END IF;
 
@@ -167,18 +173,6 @@ CREATE TABLE `getuserinfo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `section_template`
---
-
-CREATE TABLE `section_template` (
-  `template_id` int(11) NOT NULL,
-  `template_section` varchar(16) NOT NULL,
-  `template_description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `subjects`
 --
 
@@ -209,17 +203,6 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `
 (15, 'SOC SCI1', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
 (16, 'SOC SCI 2', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
 (17, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `template_info`
---
-
-CREATE TABLE `template_info` (
-  `template_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -310,28 +293,18 @@ INSERT INTO `users_info` (`user_id`, `fname`, `mname`, `lname`, `DOB`, `address`
 
 CREATE TABLE `users_subjects` (
   `stud_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL
+  `subject_id` int(11) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `room` varchar(25) NOT NULL,
+  `day` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users_subjects`
 --
 
-INSERT INTO `users_subjects` (`stud_id`, `subject_id`) VALUES
-(20240001, 2),
-(20240002, 3),
-(20240002, 5),
-(20240002, 6),
-(20240004, 9),
-(20240004, 11),
-(20240004, 15),
-(20240004, 3),
-(20240004, 2),
-(20240004, 5),
-(20240004, 12),
-(20240004, 16),
-(20240004, 17),
-(20240004, 4);
+INSERT INTO `users_subjects` (`stud_id`, `subject_id`, `time`, `room`, `day`) VALUES
+(20240001, 2, '7:00-8:00 AM', 'LAB1', 'MWF');
 
 -- --------------------------------------------------------
 
@@ -347,24 +320,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `section_template`
---
-ALTER TABLE `section_template`
-  ADD PRIMARY KEY (`template_id`);
-
---
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`subject_id`),
   ADD UNIQUE KEY `subject_code` (`subject_code`);
-
---
--- Indexes for table `template_info`
---
-ALTER TABLE `template_info`
-  ADD KEY `template_id` (`template_id`,`subject_id`),
-  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Indexes for table `users`
@@ -411,13 +371,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `template_info`
---
-ALTER TABLE `template_info`
-  ADD CONSTRAINT `template_info_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `section_template` (`template_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `template_info_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users_guardian_info`
