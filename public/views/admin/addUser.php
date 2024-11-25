@@ -10,8 +10,15 @@
 <body>    
     <?php require_once 'adminNav.php'?>
 
-    <div class="m-5 p-6 bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl font-semibold text-center mb-2">User Info</h2>
+    <div class="sm:m-5 p-6 bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-center mb-2">Add User</h2>
+        <select name="userCourse" id="userCourse" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option value="" selected disable>Select Course</option>
+            <option value="BSIT">BSIT</option>
+            <option value="BSHM">BSHM</option>
+            <option value="BSED">BSED</option>
+            <option value="BEED">BEED</option>
+        </select>
         <div class="grid grid-cols-2 mb-4 gap-4">
             <div>
                 <label for="sid" class="block text-sm font-medium text-gray-700">Student ID</label>
@@ -39,31 +46,31 @@
                 </select>
             </div>            
         </div>
-        <div class="grid grid-cols-2 mb-4 gap-4">
-            <div>
-                <div class="flex justify-between">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <div class="flex flex-wrap sm:grap-4 gap-2 mb-4">
+            <div class="w-full sm:flex-1">
+                <div>
+                <label for="password" class="text-sm font-medium text-gray-700">Password</label>
                 </div>
                 <input type="password" id="password" name="password" placeholder="••••••••" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             </div>
-            <div>
-                <div class="flex justify-between">
-                <label for="passwordC" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <div class="w-full sm:flex-1">
+                <div>
+                <label for="passwordC" class="text-sm font-medium text-gray-700">Confirm Password</label>
                 </div>
                 <input type="password" id="passwordC" name="passwordC" placeholder="••••••••" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             </div>
         </div>
-        <div class="grid grid-cols-3 mb-4 gap-4">
-            <div>
-                <label for="fname" class="block text-sm font-medium text-gray-700">First Name</label>
+        <div class="flex flex-wrap sm:grap-4 gap-2 mb-4">
+            <div class="w-full sm:flex-1">
+                <label for="fname" class="text-sm font-medium text-gray-700">First Name</label>
                 <input type="text" id="fname" name="fname" placeholder="Enter first name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocapitalize="true">
             </div>
-            <div>
-                <label for="mname" class="block text-sm font-medium text-gray-700">Middle Name</label>
+            <div class="w-full sm:flex-1">
+                <label for="mname" class="text-sm font-medium text-gray-700">Middle Name</label>
                 <input type="text" id="mname" name="mname" placeholder="Enter middle name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocapitalize="true">
             </div>
-            <div>
-                <label for="lname" class="block text-sm font-medium text-gray-700">Last Name</label>
+            <div class="w-full sm:flex-1">
+                <label for="lname" class="text-sm font-medium text-gray-700">Last Name</label>
                 <input type="text" id="lname" name="lname" placeholder="Enter last name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocapitalize="true">
             </div>
         </div>
@@ -84,17 +91,17 @@
         </div>
 
         <h2 class="text-2xl font-semibold text-center mb-2">User Guardian Info</h2>
-        <div class="grid grid-cols-3 mb-4 gap-4">
-            <div>
-                <label for="gfname" class="block text-sm font-medium text-gray-700">First Name</label>
+        <div class="flex flex-wrap sm:grap-4 gap-2">
+            <div class="w-full sm:flex-1">
+                <label for="gfname" class="text-sm font-medium text-gray-700">First Name</label>
                 <input type="text" id="gfname" name="gfname" placeholder="Enter first name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocapitalize="true">
             </div>
-            <div>
-                <label for="gmname" class="block text-sm font-medium text-gray-700">Middle Name</label>
+            <div class="w-full sm:flex-1"> 
+                <label for="gmname" class="text-sm font-medium text-gray-700">Middle Name</label>
                 <input type="text" id="gmname" name="gmname" placeholder="Enter middle name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocapitalize="true">
             </div>
-            <div>
-                <label for="glname" class="block text-sm font-medium text-gray-700">Last Name</label>
+            <div class="w-full sm:flex-1">
+                <label for="glname" class="text-sm font-medium text-gray-700">Last Name</label>
                 <input type="text" id="glname" name="glname" placeholder="Enter last name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocapitalize="true">
             </div>
         </div>
@@ -154,7 +161,7 @@ AlphaOnlyIds.forEach((id) => {
         document.getElementById("DOB").value = formattedDate;
 
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="./public/lib/js/index.js"></script>
-<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js "></script>
+<?php 
+    require_once './public/views/dependency.php';
+?>
 </html>

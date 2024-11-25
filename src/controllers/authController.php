@@ -31,6 +31,7 @@ class authController{
                     $statement->execute(['stud_id' => $_SESSION['user_id']]);
                     $user1 = $statement->fetch(PDO::FETCH_ASSOC);      
 
+                    $_SESSION['course'] = $user1['course'];
                     $_SESSION['fname'] = $user1['fname'];
                     $_SESSION['mname'] = $user1['mname'];
                     $_SESSION['lname'] = $user1['lname'];

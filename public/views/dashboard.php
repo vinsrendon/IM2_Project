@@ -8,7 +8,7 @@
 
     <title>Dashboard</title>
 </head>
-<body onload="getStudSub(<?php echo $_SESSION['stud_id']?>)">    
+<body onload="getStudSub(<?php echo $_SESSION['stud_id']?>,<?php echo $_SESSION['Role']?>)">    
     <?php require_once 'userNav.php'?>   
 
     <h1 class="text-center text-xl mt-2">STUDENT ID: <?php echo $_SESSION['stud_id']?></>
@@ -16,11 +16,12 @@
         <table class="w-full" id="subjectsTbl">
             <thead>
                 <tr>
-                    <th class="border border-amber-300 p-2">Subject Code</th>
-                    <th class="border border-amber-300 p-2">Subject Name</th>
-                    <th class="border border-amber-300 p-2">Subject Units</th>
-                    <th class="border border-amber-300 p-2">Room</th>
-                    <th class="border border-amber-300 p-2">Action</th>
+                    <th class="border border-amber-300 sm:p-2 text-xs sm:text-lg">Subject Code</th>
+                    <th class="border border-amber-300 sm:p-2 text-xs sm:text-lg">Subject Name</th>
+                    <th class="border border-amber-300 sm:p-2 text-xs sm:text-lg">Subject Units</th>
+                    <th class="border border-amber-300 sm:p-2 text-xs sm:text-lg">Time</th>
+                    <th class="border border-amber-300 sm:p-2 text-xs sm:text-lg">Day</th>
+                    <th class="border border-amber-300 sm:p-2 text-xs sm:text-lg">Room</th>
                 </tr>
             </thead>
             <tbody id="subjectsList">
@@ -28,7 +29,7 @@
         </table>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="./public/lib/js/index.js"></script>
-<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js "></script>
+<?php 
+    require_once './public/views/dependency.php';
+?>
 </html>

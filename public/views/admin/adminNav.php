@@ -2,10 +2,8 @@
     <div class="hidden sm:flex flex justify-between items-center">
         <div class="flex space-x-4">
             <a href="/admin" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Students</a>
-            <!-- <a href="/adduser" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add User</a> -->
             <a href="/subjects" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Subjects</a>
             <a href="/adminprofile" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Profile</a>
-            <!-- <a href="/addsubject" class="text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add Subject</a>             -->
         </div>
         <div>
             <button class="bg-red-500 text-white text-lg px-3 py-2 rounded hover:bg-red-600" onclick="logout()">Logout</button>
@@ -18,8 +16,8 @@
     </button>
     <div id="mobileMenu" class="hidden sm:hidden">
         <a href="/admin" class="block text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Dashboard</a>
-        <a href="/addsubject" class="block text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add Subject</a>
-        <a href="/adduser" class="block text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Add User</a>
+        <a href="/subjects" class="block text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Subjects</a>
+        <a href="/adminprofile" class="block text-white text-lg hover:bg-gray-700 px-3 py-2 rounded">Profile</a>
         <button class="block bg-red-500 text-white text-lg px-3 py-2 rounded hover:bg-red-600" onclick="logout()">Logout</button>
     </div>
 </nav>

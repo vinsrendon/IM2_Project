@@ -104,6 +104,7 @@ function addUser(){
     let stud_passC = document.getElementById("passwordC").value.trim();
 
     let userRole = document.getElementById("userRole").value.trim()
+    let userCourse = document.getElementById("userCourse").value.trim()
 
     let fname = document.getElementById("fname").value.trim();
     let mname = document.getElementById("mname").value.trim();
@@ -122,7 +123,7 @@ function addUser(){
     passError.classList.add("hidden");
 
     if (!stud_pass ||!stud_passC ||!fname ||!lname ||!DOB 
-        ||!address ||!pnumber ||!gfname ||!glname ||!gaddress ||!gpnumber) {
+        ||!address ||!pnumber ||!gfname ||!glname ||!gaddress ||!gpnumber || !userCourse) {
         fieldError.classList.remove("hidden");
         return;
     }
@@ -149,7 +150,8 @@ function addUser(){
             gmname: gmname,
             glname: glname,
             gaddress: gaddress,
-            gpnumber: gpnumber
+            gpnumber: gpnumber,
+            stdcourse:userCourse
         },
         success: function (response) {
             console.log(response);
@@ -249,15 +251,15 @@ function getStudents(){
                 }         
                 if(student.Role === 0){
                     newRow.innerHTML=`
-                    <td class="border border-slate-300 text-center">${student.stud_id}</td>
-                    <td class="border border-slate-300 text-center">${student.lname}</td>
-                    <td class="border border-slate-300 text-center">${student.fname}</td>
-                    <td class="border border-slate-300 text-center">${student.mname}</td>
-                    <td class="border border-slate-300 text-center">
-                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
-                    <button class="m-1 bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-blue-600" onclick="set_stud_id_to_get_sub(${student.stud_id})">SUBJECTS</button>
-                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
-                    <button class="m-1 bg-red-500 text-white text-lg px-1 py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.stud_id}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.lname}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.fname}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.mname}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">
+                    <button class="m-1 bg-blue-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
+                    <button class="m-1 bg-blue-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-blue-600" onclick="set_stud_id_to_get_sub(${student.stud_id})">SUBJECTS</button>
+                    <button class="m-1 bg-red-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
+                    <button class="m-1 bg-red-500 text-white text-lg sm:px-1 sm:py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
                     `;
                 }                
@@ -499,12 +501,12 @@ function getSubjects(){
                 let newRow = tbody.insertRow();
 
                 newRow.innerHTML=`
-                    <td class="border border-slate-300 text-center">${subject.subject_code}</td>
-                    <td class="border border-slate-300 text-center">${subject.subject_name}</td>
-                    <td class="border border-slate-300 text-center">${subject.units}</td>
-                    <td class="border border-slate-300 text-center">${subject.course}</td>
-                    <td class="border border-slate-300 text-center">
-                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.subject_code}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.subject_name}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.units}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.course}</td>
+                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">
+                    <button class="m-1 bg-red-500 text-white text-sm sm:text-lg sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
                     </td>
                 `;
             });
@@ -538,7 +540,7 @@ function set_stud_id_to_get_sub(sid){
     }); 
 }
 
-function getStudSub(sid){
+function getStudSub(sid,role){
     let tbody = document.getElementById("subjectsList");    
 
     $.ajax({
@@ -551,20 +553,29 @@ function getStudSub(sid){
         success: function(response) {
             
             response = JSON.parse(response);
+            if(role === 0){
 
+            }
+            else if(role === 1){
+
+            }
             response.forEach(subject => {
                 let newRow = tbody.insertRow();
 
                 newRow.innerHTML=`
-                    <td class="border border-slate-300 text-center">${subject.subject_code}</td>
-                    <td class="border border-slate-300 text-center">${subject.subject_name}</td>
-                    <td class="border border-slate-300 text-center">${subject.units}</td>
-                    <td class="border border-slate-300 text-center">${subject.time}</td>
-                    <td class="border border-slate-300 text-center">${subject.day}</td>
-                    <td class="border border-slate-300 text-center">${subject.room}</td>
-                    <td class="border border-slate-300 text-center">
-                    <button class="m-1 bg-red-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600" onclick="dltStudSub(${sid},${subject.subject_id})">DELETE</button>
-                    </td>
+                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.subject_code}</td>
+                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.subject_name}</td>
+                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.units}</td>
+                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.time}</td>
+                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.day}</td>
+                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.room}</td>
+                    ${
+                        role === 1 ? `<td class="border border-slate-300 text-center text-sm sm:text-lg">                    
+                        <button class="m-1 bg-red-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="dltStudSub(${sid},${subject.subject_id},${role})">DELETE</button>
+                        </td>`
+                        : ``
+                    }
+                    
                 `;
             });
         },
@@ -816,7 +827,7 @@ function vStudSubRstTable(){
     }
 }
 
-function addSubjectToUser(sid){
+function addSubjectToUser(sid,role){
     let subToAdd = document.getElementById("subToAdd").value.trim()
     let dayToAdd = document.getElementById("day").value.trim()
     let timeToAdd = document.getElementById("time").value.trim()
@@ -850,7 +861,7 @@ function addSubjectToUser(sid){
                     timer: 1000
                 }).then(() => {
                     vStudSubRstTable();
-                    getStudSub(sid);
+                    getStudSub(sid,role);
                     loadSubjects();
                     resetVSSPage();
                 });
@@ -888,6 +899,12 @@ function addSubjectToUser(sid){
                     showConfirmButton: false,
                     timer: 2500
                 }).then(() => {
+                    console.log(sid+ " " +
+                        subToAdd+ " " +
+                        dayToAdd+ " " +
+                        timeToAdd+ " " +
+                        roomToAdd);
+                    
                     loadSubjects();
                     resetVSSPage();
                 });
@@ -903,7 +920,7 @@ function addSubjectToUser(sid){
     });
 }
 
-function dltStudSub(sid,subId){
+function dltStudSub(sid,subId,role){
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to delete subject?",
@@ -932,7 +949,7 @@ function dltStudSub(sid,subId){
                             timer: 1500
                         }).then(() => {
                             vStudSubRstTable();
-                            getStudSub(sid);
+                            getStudSub(sid,role);
                             loadSubjects();
                         });
                     } else {

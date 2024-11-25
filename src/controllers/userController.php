@@ -29,14 +29,6 @@ class userController{
             $this->trackStudId();
 
             $stud_id = 0;
-            /*
-            if(substr($_SESSION['lastsid'], 0, 4) == date("Y")){
-                isset($_POST['stud_id'])? $stud_id = htmlspecialchars(strip_tags($_POST['stud_id'])) : $stud_id=($_SESSION['lastsid']+1);
-            }
-            else{
-                isset($_POST['stud_id'])? $stud_id = htmlspecialchars(strip_tags($_POST['stud_id'])) : $stud_id= (int)(date("Y") . "0001");                
-            }
-            */
 
             if(isset($_POST['stud_id'])){
                 $stud_id = htmlspecialchars(strip_tags($_POST['stud_id']));
@@ -62,7 +54,7 @@ class userController{
             $statement = $con->prepare("CALL register_user(
             :stud_id,:stud_pass,:Role,:Flag,
             :fname,:mname,:lname,:DOB,:address,:pnumber,
-            :gfname,:gmname,:glname,:gaddress,:gpnumber)");
+            :gfname,:gmname,:glname,:gaddress,:gpnumber,:stdcourse)");
             $statement->execute([
                 'stud_id' => $stud_id,
                 'stud_pass' => $hashed,
@@ -78,7 +70,8 @@ class userController{
                 'gmname' => htmlspecialchars(strtoupper(strip_tags($_POST['gmname']))),
                 'glname' => htmlspecialchars(strtoupper(strip_tags($_POST['glname']))),
                 'gaddress' => htmlspecialchars(strtoupper(strip_tags($_POST['gaddress']))),
-                'gpnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber'])))
+                'gpnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber']))),
+                'stdcourse'=> htmlspecialchars(strtoupper(strip_tags($_POST['stdcourse'])))
             ]);
 
             $this->trackStudId();
@@ -137,33 +130,7 @@ class userController{
             return json_encode($th);
         }
     }
-/*
-    function unsetTempData(){
-        
-        try {
-            session_start();
 
-            unset(
-                $_SESSION['temp_stud_id'],
-                $_SESSION['temp_fname'],
-                $_SESSION['temp_mname'],
-                $_SESSION['temp_lname'],
-                $_SESSION['temp_DOB'],
-                $_SESSION['temp_address'],
-                $_SESSION['temp_pnumber'],
-                $_SESSION['temp_gfname'],
-                $_SESSION['temp_gmname'],
-                $_SESSION['temp_glname'],
-                $_SESSION['temp_gaddress'],
-                $_SESSION['temp_gpnumber']
-            );
-
-            return json_encode(['status' => 'success']);
-        } catch (\Exception $th) {
-            return json_encode(['status' => 'error', $th]);
-        }
-    }
-*/
     function getStudentById(){
         try {
             $db = new database();
@@ -175,6 +142,7 @@ class userController{
             
             session_start();
             $_SESSION['temp_stud_id'] = $user['stud_id'];
+            $_SESSION['temp_course'] = $user['course'];
             $_SESSION['temp_fname'] = $user['fname'];
             $_SESSION['temp_mname'] = $user['mname'];
             $_SESSION['temp_lname'] = $user['lname'];

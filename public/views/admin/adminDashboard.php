@@ -13,8 +13,8 @@
 
     <h1 class="text-center mt-5 cursor-default">LAST USER ID: <?php echo (int)$_SESSION['lastsid'];?></h1>
 
-    <div class='w-full sm:px-3 flex sm:justify-around justify-center flex-wrap'>
-        <div class="mt-3 relative flex w-3/4 h-12 rounded-lg focus-within:shadow-lg bg-blue-500 border overflow-hidden">
+    <div class='w-full sm:px-4 px-2 flex sm:justify-around justify-center flex-wrap'>
+        <div class="mt-3 relative flex w-full sm:w-3/4 h-12 rounded-lg focus-within:shadow-lg bg-blue-500 border overflow-hidden">
             <div class="grid place-items-center h-full w-12 text-gray-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -31,14 +31,14 @@
     
 
     <div class="flex justify-around mt-5 sm:px-3">
-        <table class="w-full" id="studentsTbl">
+        <table class="w-full mb-5" id="studentsTbl">
             <thead>
                 <tr>
-                    <th class="border border-amber-300 p-2">Student ID</th>
-                    <th class="border border-amber-300 p-2">Last Name</th>
-                    <th class="border border-amber-300 p-2">First Name</th>
-                    <th class="border border-amber-300 p-2">Middle Name</th>
-                    <th class="border border-amber-300 p-2">Action</th>
+                    <th class="border border-amber-300 sm:p-2 p-1 text-sm sm:text-lg">Student ID</th>
+                    <th class="border border-amber-300 sm:p-2 p-1 text-sm sm:text-lg">Last Name</th>
+                    <th class="border border-amber-300 sm:p-2 p-1 text-sm sm:text-lg">First Name</th>
+                    <th class="border border-amber-300 sm:p-2 p-1 text-sm sm:text-lg">Middle Name</th>
+                    <th class="border border-amber-300 sm:p-2 p-1 text-sm sm:text-lg">Action</th>
                 </tr>
             </thead>
             <tbody id="studentsList">
@@ -71,7 +71,7 @@
         
     });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="./public/lib/js/index.js"></script>
-<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js "></script>
+<?php 
+    require_once './public/views/dependency.php';
+?>
 </html>

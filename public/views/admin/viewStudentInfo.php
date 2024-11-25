@@ -21,14 +21,22 @@
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl class="sm:divide-y sm:divide-gray-200">
-        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                    Course
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    <?php echo $_SESSION['temp_course']?>
+                </dd>
+            </div>
+            <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">
                     Student ID
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <?php echo $_SESSION['temp_stud_id']?>
                 </dd>
-            </div>
+            </div>            
             <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">
                     First Name
@@ -39,18 +47,18 @@
             </div>
             <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">
-                    Middle Name
+                    Middle Name *
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    <?php echo $_SESSION['temp_mname']?>
+                    <input type="text" class="text-gray-700 bg-transparent border-0 w-full" value="<?php echo $_SESSION['temp_mname']?>"/>
                 </dd>
             </div>
             <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">
-                    Last Name
+                    Last Name *
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    <?php echo $_SESSION['temp_lname']?>
+                    <input type="text" class="text-gray-700 bg-transparent border-0 w-full" value="<?php echo $_SESSION['temp_lname']?>"/>
                 </dd>
             </div>
             <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -133,7 +141,7 @@
         <button class="bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-red-600" onclick="">SAVE</button>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="./public/lib/js/index.js"></script>
-<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js "></script>
+<?php 
+    require_once './public/views/dependency.php';
+?>
 </html>

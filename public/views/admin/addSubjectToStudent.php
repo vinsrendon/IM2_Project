@@ -27,7 +27,7 @@
         <input type="button" value="ADD SUBJECT" onclick="addSubjectToUser()" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="./public/lib/js/index.js"></script>
-<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js "></script>
+<?php 
+    require_once './public/views/dependency.php';
+?>
 </html>
