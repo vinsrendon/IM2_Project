@@ -34,7 +34,14 @@
                 <div class="flex justify-between">
                 <label for="course" class="block text-sm font-medium text-gray-700">Course</label>
                 </div>
-                <input type="text" id="course" name="course" placeholder="Enter Subject Course" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="12">
+                <!-- <input type="text" id="course" name="course" placeholder="Enter Subject Course" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" maxlength="12"> -->
+                <select name="course" id="course" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="" selected disable>Select Course</option>
+                    <option value="BSIT">BSIT</option>
+                    <option value="BSHM">BSHM</option>
+                    <option value="BSED">BSED</option>
+                    <option value="BEED">BEED</option>
+                </select>
             </div>
         </div>
         <div class="mb-5">

@@ -256,10 +256,10 @@ function getStudents(){
                     <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.fname}</td>
                     <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.mname}</td>
                     <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">
-                    <button class="m-1 bg-blue-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
-                    <button class="m-1 bg-blue-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-blue-600" onclick="set_stud_id_to_get_sub(${student.stud_id})">SUBJECTS</button>
-                    <button class="m-1 bg-red-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
-                    <button class="m-1 bg-red-500 text-white text-lg sm:px-1 sm:py-1 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
+                    <button class="m-1 bg-blue-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
+                    <button class="m-1 bg-blue-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-blue-600" onclick="set_stud_id_to_get_sub(${student.stud_id})">SUBJECTS</button>
+                    <button class="m-1 bg-red-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
+                    <button class="m-1 bg-red-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-red-600" onclick="${buttonCTA}">${btnTxt}</button>
                     </td>
                     `;
                 }                
@@ -506,7 +506,7 @@ function getSubjects(){
                     <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.units}</td>
                     <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.course}</td>
                     <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">
-                    <button class="m-1 bg-red-500 text-white text-sm sm:text-lg sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
+                    <button class="m-1 bg-red-500 text-white text-sm sm:text-lg p-1 sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
                     </td>
                 `;
             });
@@ -1054,4 +1054,155 @@ function setTime(){
             select.appendChild(option);
         });
     }
+}
+
+function updateProfileAdmin(){
+
+    let fname = document.getElementById("fname").value.trim();
+    let mname = document.getElementById("mname").value.trim();
+    let lname = document.getElementById("lname").value.trim();
+    let DOB = document.getElementById("DOB").value.trim();
+    let address = document.getElementById("address").value.trim();
+    let pnumber = document.getElementById("pnumber").value.trim();
+
+    let gfname = document.getElementById("gfname").value.trim();
+    let gmname = document.getElementById("gmname").value.trim();
+    let glname = document.getElementById("glname").value.trim();
+    let gaddress = document.getElementById("gaddress").value.trim();
+    let gpnumber = document.getElementById("gpnumber").value.trim();
+
+    fieldError.classList.add("hidden");
+    passError.classList.add("hidden");
+
+    if (!fname ||!lname ||!DOB ||!address ||!pnumber ||!gfname ||!glname ||!gaddress ||!gpnumber) {
+        fieldError.classList.remove("hidden");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: "updateProfileAdmin",
+            fname: fname,
+            mname: mname,
+            lname: lname,
+            DOB: DOB,
+            address: address,
+            pnumber: pnumber,
+            gfname: gfname,
+            gmname: gmname,
+            glname: glname,
+            gaddress: gaddress,
+            gpnumber: gpnumber
+        },
+        success: function (response) {
+            // console.log(response);
+            
+            let result = JSON.parse(response);              
+
+            if (result.status === 'success') {
+                Swal.fire({
+                    icon: "success",
+                    title: "Profile Updated Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                        window.location.href = '/adminprofile';
+                    });
+                                          
+            }    
+            else if(result.status === 'no change'){
+                Swal.fire({
+                    icon: "error",
+                    title: "No Profile Change",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            else
+            {
+                Swal.fire({
+                    icon: "error",
+                    title: "Unexpected Error Occured",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                console.log(result);                
+            }           
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+        },
+    }); 
+}
+
+function updateProfileUser(){
+    let address = document.getElementById("address").value.trim();
+    let pnumber = document.getElementById("pnumber").value.trim();
+
+    let gfname = document.getElementById("gfname").value.trim();
+    let gmname = document.getElementById("gmname").value.trim();
+    let glname = document.getElementById("glname").value.trim();
+    let gaddress = document.getElementById("gaddress").value.trim();
+    let gpnumber = document.getElementById("gpnumber").value.trim();
+
+    fieldError.classList.add("hidden");
+    passError.classList.add("hidden");
+
+    if (!address ||!pnumber ||!gfname ||!glname ||!gaddress ||!gpnumber) {
+        fieldError.classList.remove("hidden");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: './src/request/request.php',
+        data: {
+            choice: "updateProfileUser",
+            address: address,
+            pnumber: pnumber,
+            gfname: gfname,
+            gmname: gmname,
+            glname: glname,
+            gaddress: gaddress,
+            gpnumber: gpnumber
+        },
+        success: function (response) {            
+            let result = JSON.parse(response);              
+
+            if (result.status === 'success') {
+                Swal.fire({
+                    icon: "success",
+                    title: "Profile Updated Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                        window.location.href = '/profile';
+                    });
+                                          
+            }    
+            else if(result.status === 'no change'){
+                Swal.fire({
+                    icon: "error",
+                    title: "No Profile Change",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            else
+            {
+                Swal.fire({
+                    icon: "error",
+                    title: "Unexpected Error Occured",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                console.log(result);                
+            }           
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+        },
+    });
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2024 at 04:26 PM
+-- Generation Time: Nov 26, 2024 at 05:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -37,7 +37,7 @@ DECLARE subjectCount INT;
     FROM users_subjects 
     WHERE stud_id = sid;
 
-    IF subjectCount >= 10 THEN
+    IF subjectCount >= 9 THEN
         SIGNAL SQLSTATE '45000';
     ELSE
         -- Check if the combination already exists
@@ -139,6 +139,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `truncate_tables` ()   BEGIN
     TRUNCATE TABLE users_subjects;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_profile_admin` (IN `sida` INT, IN `fnamea` VARCHAR(128), IN `mnamea` VARCHAR(128), IN `lnamea` VARCHAR(128), IN `DOBa` DATE, IN `addressa` VARCHAR(256), IN `pnumbera` VARCHAR(15), IN `gfnamea` VARCHAR(128), IN `gmnamea` VARCHAR(128), IN `glnamea` VARCHAR(128), IN `gaddressa` VARCHAR(256), IN `gpnumbera` VARCHAR(15))   BEGIN
+
+UPDATE users_info SET fname=fnamea,mname=mnamea,lname=lnamea,DOB=DOBa,address=addressa,pnumber=pnumbera WHERE user_id = sida;
+
+UPDATE users_guardian_info ugi SET ugi.gfname=gfnamea, ugi.gmname=gmnamea, ugi.glname=glnamea, ugi.gaddress=gaddressa, ugi.gpnumber=gpnumbera WHERE ugi.user_id=sida;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_profile_user` (IN `sida` INT, IN `addressa` VARCHAR(256), IN `pnumbera` VARCHAR(15), IN `gfnamea` VARCHAR(128), IN `gmnamea` VARCHAR(128), IN `glnamea` VARCHAR(128), IN `gaddressa` VARCHAR(256), IN `gpnumbera` VARCHAR(15))   BEGIN
+
+UPDATE users_info SET address=addressa,pnumber=pnumbera WHERE user_id = sida;
+
+UPDATE users_guardian_info ugi SET ugi.gfname=gfnamea, ugi.gmname=gmnamea, ugi.glname=glnamea, ugi.gaddress=gaddressa, ugi.gpnumber=gpnumbera WHERE ugi.user_id=sida;
+
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -199,7 +214,17 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `
 (15, 'SOC SCI1', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
 (16, 'SOC SCI 2', 'PHIL. CONSTITUTION AND GOVERNMENT', 3, 'BSIT'),
 (17, 'APPSDEV', 'APPLICATIONS DEVELOPMENT', 3, 'BSIT'),
-(18, 'PRECAL', 'PRE-CALCULUS', 3, 'BSIT');
+(18, 'PRECAL', 'PRE-CALCULUS', 3, 'BSIT'),
+(19, 'SP', 'SOCIAL ISSUES AND PROFESSIONAL PRACTICE', 3, 'BSIT'),
+(20, 'OPT', 'OFFICE PRODUCTIVITY TOOLS', 3, 'BSIT'),
+(21, 'GE8', 'HUMAN REPRODUCTION', 3, 'BSIT'),
+(22, 'GE7', 'LIVING IN THE IT ERA', 3, 'BSIT'),
+(23, 'IT TRACK EL 1', 'BUSINESS COMMUNICATION', 3, 'BSIT'),
+(24, 'IT ELEC 2', 'WEB SYSTEM AND TECHNOLOGY', 3, 'BSIT'),
+(25, 'SIA 1', 'SYSTEM INTEGRATION AND ARCHITECTURE 1', 3, 'BSIT'),
+(26, 'BASIC ELECT', 'BASIC ELECTRONICS', 3, 'BSIT'),
+(27, 'GE1', 'MATHEMATICS IN THE MODERN WORLD', 3, 'BSIT'),
+(28, 'GE2', 'UNDERSTANDING THE SELF', 3, 'BSIT');
 
 -- --------------------------------------------------------
 
@@ -221,8 +246,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
 (1, 123, '$2y$10$fz4J03yoQiaFcSAHd2LJK.01cNmwJ80.mVTLbrnPbH14XpuNzEdD6', 1, 1),
-(3, 20240001, '$2y$10$p5NnBcbYHdRwYN3Hz0n7te/66P6IC3.rbIU2h8Y0dcP9gBU4d69Zq', 0, 1),
-(4, 20240002, '$2y$10$C.TVHCmyfwZD29.NGnUCFeCaL5x0LnPg88vax6BrAt.DgPmb6QhDW', 0, 1),
+(4, 20240002, '$2y$10$qF9lXF2h5If9TJqgzFMoUuIMEgXD0goB/WKK1LaAyQtNp9GPmk832', 0, 1),
 (5, 20240003, '$2y$10$iSnys6XLv8RumV0ZeaXhG.R3mzrMfF0OlJYhyHcqOXC75DzxTU9qW', 0, 1),
 (6, 20240004, '$2y$10$bzPHJbG29BNic1Ko9q4L0egFaYh8kv8xxreIS1/LEYW03KUjEH/T6', 0, 1),
 (7, 20240005, '$2y$10$2k20vYAZ2oqR88bgdy21l.Q1P31onMyfOeFuuESiLvbS9wrj.saRe', 1, 1),
@@ -248,13 +272,12 @@ CREATE TABLE `users_guardian_info` (
 --
 
 INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gaddress`, `gpnumber`) VALUES
-(1, 'ADMIN GFNAME', 'ADMIN GMNAME', 'ADMIN GLNAME', 'ADMIN GADDRESS', 'ADMIN GPNUMBER'),
-(3, 'GEORGE', '', 'DOE', 'GABI', '09578646364'),
-(4, 'RYAN', '', 'BAUTISTA', 'GABI', '09176523571'),
-(5, 'SHERIL', '', 'SERNA', 'PILIPOG', '09178263472'),
-(6, 'MARY', '', 'MONTéS', 'ALEGRIA', '09675236427'),
-(7, 'ADMIN II F', 'ADMIN II M', 'ADMIN II L', 'ADMIN II', '09123762634'),
-(8, 'GRIZEL', 'VALVERDE', 'GIL', 'GABI', '09747363367');
+(1, 'ADMIN GFNAME', 'ADMIN GMNAME', 'ADMIN GLNAME', 'ADMIN GADDRESS', '09123456789'),
+(4, 'RYAN', '', 'BAUTISTA', 'GABI', '09123456789'),
+(5, 'SHERIL', '', 'SERNA', 'PILIPOG', '09123456789'),
+(6, 'MARY', '', 'MONTéS', 'ALEGRIA', '09123456789'),
+(7, 'ADMIN II F', 'ADMIN II M', 'ADMIN II L', 'ADMIN II', '09123456789'),
+(8, 'GRIZEL', 'VALVERDE', 'GIL', 'GABI', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -278,8 +301,7 @@ CREATE TABLE `users_info` (
 --
 
 INSERT INTO `users_info` (`user_id`, `course`, `fname`, `mname`, `lname`, `DOB`, `address`, `pnumber`) VALUES
-(1, '', 'ADMIN FNAME', 'ADMIN MNAME', 'ADMIN LNAME', '1990-01-01', 'ADMIN ADDRESS', '09123456789'),
-(3, 'BSIT', 'JOHN', '', 'DOE', '2001-11-17', 'GABI', '09786347856'),
+(1, '', 'ADMIN FNAME', 'ADMIN MNAME', 'ADMIN LNAME', '1990-01-01', 'GABI', '09123456789'),
 (4, 'BSIT', 'MICHAEL', '', 'BAUTISTA', '2000-11-17', 'GABI', '09675624652'),
 (5, 'BSIT', 'ELLEN', '', 'SERNA', '1991-11-17', 'PILIPOG', '09782634623'),
 (6, 'BSIT', 'EDELIRA', '', 'MONTéS', '2001-11-17', 'ALEGRIA', '09736423764'),
@@ -307,7 +329,17 @@ CREATE TABLE `users_subjects` (
 INSERT INTO `users_subjects` (`stud_id`, `subject_id`, `time`, `room`, `day`) VALUES
 (20240001, 2, '7:00-8:00 AM', 'LAB1', 'MWF'),
 (20240001, 5, '8:00-9:00 AM', 'LAB3', 'MWF'),
-(20240001, 3, '9:00-10:00 AM', 'LAB2', 'MWF');
+(20240001, 3, '9:00-10:00 AM', 'LAB2', 'MWF'),
+(20240002, 2, '7:00-8:00 AM', 'LAB1', 'MWF'),
+(20240002, 3, '8:00-9:00 AM', 'LAB1', 'MWF'),
+(20240002, 6, '9:00-10:00 AM', 'LAB2', 'MWF'),
+(20240002, 5, '10:00-11:00 AM', 'LAB3', 'MWF'),
+(20240002, 11, '11:00-12:00 PM', 'LAB3', 'MWF'),
+(20240002, 15, '7:30-9:00 AM', '201', 'TTH'),
+(20240002, 9, '9:00-10:30 AM', 'LAB3', 'TTH'),
+(20240002, 17, '10:30-12:00 PM', 'LAB3', 'TTH'),
+(20240002, 18, '7:00-10:00 AM', '401', 'SAT'),
+(20240002, 19, '10:00-1:00 PM', '101', 'SAT');
 
 -- --------------------------------------------------------
 
@@ -363,36 +395,13 @@ ALTER TABLE `users_subjects`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `users_guardian_info`
---
-ALTER TABLE `users_guardian_info`
-  ADD CONSTRAINT `users_guardian_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `users_info`
---
-ALTER TABLE `users_info`
-  ADD CONSTRAINT `users_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `users_subjects`
---
-ALTER TABLE `users_subjects`
-  ADD CONSTRAINT `users_subjects_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_subjects_ibfk_2` FOREIGN KEY (`stud_id`) REFERENCES `users` (`stud_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

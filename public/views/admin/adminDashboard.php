@@ -14,7 +14,7 @@
     <h1 class="text-center mt-5 cursor-default">LAST USER ID: <?php echo (int)$_SESSION['lastsid'];?></h1>
 
     <div class='w-full sm:px-4 px-2 flex sm:justify-around justify-center flex-wrap'>
-        <div class="mt-3 relative flex w-full sm:w-3/4 h-12 rounded-lg focus-within:shadow-lg bg-blue-500 border overflow-hidden">
+        <div class="mt-3 relative flex w-full sm:w-3/4 sm:h-12 rounded-lg focus-within:shadow-lg bg-blue-500 border overflow-hidden">
             <div class="grid place-items-center h-full w-12 text-gray-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -24,7 +24,7 @@
             <input class="peer h-full w-full outline-none text-sm text-gray-700 p-2" type="text" id="search" placeholder="Search Student..." maxlength="8"/>            
         </div>
         <div>
-            <a href="/adduser"><button class="mt-3 h-12 ml-3 bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD STUDENT</button></a>
+            <a href="/adduser"><button class="mt-3 sm:h-12 sm:ml-3 bg-blue-500 text-white text-sm sm:text-lg px-3 py-2 rounded hover:bg-blue-600" >ADD STUDENT</button></a>
         </div>
     </div>
 

@@ -81,6 +81,16 @@ if (isset($_POST['choice'])) {
             $ctr = new subjectController();
             echo $ctr->dltStudSub();
             break;
+        case 'updateProfileAdmin':
+            session_start();
+            $ctr = new userController();
+            echo $ctr->updateProfileAdmin();
+            break;
+        case 'updateProfileUser':
+            session_start();
+            $ctr = new userController();
+            echo $ctr->updateProfileUser();
+            break;
         default:
             echo 'cannot handle request';
             break;

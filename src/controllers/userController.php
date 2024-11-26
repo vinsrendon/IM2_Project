@@ -206,4 +206,100 @@ class userController{
             return json_encode(['status' => 'error', 'message' => 'error: ' . $th->getMessage()]);
         }
     }
+
+    function updateProfileAdmin(){
+        if($_POST['fname'] === $_SESSION['fname'] && 
+        $_POST['mname'] === $_SESSION['mname'] && 
+        $_POST['lname'] === $_SESSION['lname'] && 
+        $_POST['DOB'] === $_SESSION['DOB'] && 
+        $_POST['address'] === $_SESSION['address'] && 
+        $_POST['pnumber'] === $_SESSION['pnumber'] && 
+        $_POST['gfname'] === $_SESSION['gfname'] && 
+        $_POST['gmname'] === $_SESSION['gmname'] && 
+        $_POST['glname'] === $_SESSION['glname'] && 
+        $_POST['gaddress'] === $_SESSION['gaddress'] && 
+        $_POST['gpnumber'] === $_SESSION['gpnumber']){
+            return json_encode(['status' => 'no change']);
+        }
+        else{
+            try {
+                $sid = $_SESSION['user_id'];
+                $db = new database();
+                $con = $db->initDatabase();
+                
+                $statement = $con->prepare("CALL update_profile_admin(:stud_id,:fname,:mname,:lname,:DOB,:address,:pnumber,:gfname,:gmname,:glname,:gaddress,:gpnumber)");
+                $statement->execute([
+                    'stud_id' => $sid,
+                    'fname' => htmlspecialchars(strtoupper(strip_tags($_POST['fname']))),
+                    'mname' => htmlspecialchars(strtoupper(strip_tags($_POST['mname']))),
+                    'lname' => htmlspecialchars(strtoupper(strip_tags($_POST['lname']))),
+                    'DOB' => $_POST['DOB'],
+                    'address' => htmlspecialchars(strtoupper(strip_tags($_POST['address']))),
+                    'pnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['pnumber']))),
+                    'gfname' => htmlspecialchars(strtoupper(strip_tags($_POST['gfname']))),
+                    'gmname' => htmlspecialchars(strtoupper(strip_tags($_POST['gmname']))),
+                    'glname' => htmlspecialchars(strtoupper(strip_tags($_POST['glname']))),
+                    'gaddress' => htmlspecialchars(strtoupper(strip_tags($_POST['gaddress']))),
+                    'gpnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber'])))
+                ]);
+                $_SESSION['fname'] = htmlspecialchars(strtoupper(strip_tags($_POST['fname'])));
+                $_SESSION['mname'] = htmlspecialchars(strtoupper(strip_tags($_POST['mname'])));
+                $_SESSION['lname'] = htmlspecialchars(strtoupper(strip_tags($_POST['lname'])));
+                $_SESSION['DOB'] = $_POST['DOB'];
+                $_SESSION['address'] = htmlspecialchars(strtoupper(strip_tags($_POST['address'])));
+                $_SESSION['pnumber'] = htmlspecialchars(strtoupper(strip_tags($_POST['pnumber'])));
+                $_SESSION['gfname'] = htmlspecialchars(strtoupper(strip_tags($_POST['gfname'])));
+                $_SESSION['gmname'] = htmlspecialchars(strtoupper(strip_tags($_POST['gmname'])));
+                $_SESSION['glname'] = htmlspecialchars(strtoupper(strip_tags($_POST['glname'])));
+                $_SESSION['gaddress'] = htmlspecialchars(strtoupper(strip_tags($_POST['gaddress'])));
+                $_SESSION['gpnumber'] = htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber'])));
+
+                return json_encode(['status' => 'success']);
+            } catch (PDOException $th) {
+                return json_encode($th);
+            }
+        }
+    }
+
+    function updateProfileUser(){
+        if($_POST['address'] === $_SESSION['address'] && 
+        $_POST['pnumber'] === $_SESSION['pnumber'] && 
+        $_POST['gfname'] === $_SESSION['gfname'] && 
+        $_POST['gmname'] === $_SESSION['gmname'] && 
+        $_POST['glname'] === $_SESSION['glname'] && 
+        $_POST['gaddress'] === $_SESSION['gaddress'] && 
+        $_POST['gpnumber'] === $_SESSION['gpnumber']){
+            return json_encode(['status' => 'no change']);
+        }
+        else{
+            try {
+                $sid = $_SESSION['user_id'];
+                $db = new database();
+                $con = $db->initDatabase();
+                
+                $statement = $con->prepare("CALL update_profile_user(:stud_id,:address,:pnumber,:gfname,:gmname,:glname,:gaddress,:gpnumber)");
+                $statement->execute([
+                    'stud_id' => $sid,
+                    'address' => htmlspecialchars(strtoupper(strip_tags($_POST['address']))),
+                    'pnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['pnumber']))),
+                    'gfname' => htmlspecialchars(strtoupper(strip_tags($_POST['gfname']))),
+                    'gmname' => htmlspecialchars(strtoupper(strip_tags($_POST['gmname']))),
+                    'glname' => htmlspecialchars(strtoupper(strip_tags($_POST['glname']))),
+                    'gaddress' => htmlspecialchars(strtoupper(strip_tags($_POST['gaddress']))),
+                    'gpnumber' => htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber'])))
+                ]);
+                $_SESSION['address'] = htmlspecialchars(strtoupper(strip_tags($_POST['address'])));
+                $_SESSION['pnumber'] = htmlspecialchars(strtoupper(strip_tags($_POST['pnumber'])));
+                $_SESSION['gfname'] = htmlspecialchars(strtoupper(strip_tags($_POST['gfname'])));
+                $_SESSION['gmname'] = htmlspecialchars(strtoupper(strip_tags($_POST['gmname'])));
+                $_SESSION['glname'] = htmlspecialchars(strtoupper(strip_tags($_POST['glname'])));
+                $_SESSION['gaddress'] = htmlspecialchars(strtoupper(strip_tags($_POST['gaddress'])));
+                $_SESSION['gpnumber'] = htmlspecialchars(strtoupper(strip_tags($_POST['gpnumber'])));
+
+                return json_encode(['status' => 'success']);
+            } catch (PDOException $th) {
+                return json_encode($th);
+            }
+        }
+    }
 }

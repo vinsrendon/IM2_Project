@@ -9,7 +9,8 @@ $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 $routes = [            
     '/dashboard' => 'public/views/dashboard.php',
     '/profile' => 'public/views/profile.php',
-    '/changepass' => 'public/views/changepassword.php'
+    '/changepass' => 'public/views/changepassword.php',
+    '/update' => 'public/views/userUpdateProfile.php'
 ];
 
 $routesAdmin =[
@@ -20,7 +21,8 @@ $routesAdmin =[
     '/viewstudentinfo' => 'public/views/admin/viewStudentInfo.php',
     '/viewstudentsubject' => 'public/views/admin/viewStudentSubject.php',
     '/adminprofile' => 'public/views/admin/adminProfile.php',
-    '/changepass' => 'public/views/changepassword.php'
+    '/changepass' => 'public/views/changepassword.php',
+    '/updateprofile' => 'public/views/admin/updateProfile.php'
 ];
 
 $routesGlobal = [
