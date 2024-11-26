@@ -11,7 +11,7 @@
 <body>
     <?php require_once 'adminNav.php'?>
     
-    <div class="px-4 py-5 sm:px-6 bg-green-200">
+    <div class="px-4 py-5 sm:px-6 bg-amber-200">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             User Profile
         </h3>
@@ -85,7 +85,7 @@
         </dl>
     </div>
     
-    <div class="px-4 py-5 sm:px-6 bg-green-200">
+    <div class="px-4 py-5 sm:px-6 bg-amber-200">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             User's Guardian Profile
         </h3>
@@ -133,9 +133,6 @@
                 </dd>
             </div>
         </dl>
-    </div>
-    <div class="px-4 py-5 sm:px-6 bg-green-200 flex justify-end">
-        <button class="bg-blue-500 text-white text-lg px-3 py-2 rounded hover:bg-red-600" onclick="">SAVE</button>
     </div>
 </body>
 <?php 

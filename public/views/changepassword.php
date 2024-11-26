@@ -6,10 +6,17 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <title>Change Password</title>
+    <title><?php echo $_SESSION['Role']===1? 'Admin ': 'User ';?>Change Password</title>
 </head>
 <body>
-    <?php require_once 'userNav.php'?>
+    <?php 
+        if($_SESSION['Role'] === 1){
+            require $_SERVER['DOCUMENT_ROOT'].'/public/views/admin/adminNav.php';
+        }
+        else{
+            require 'userNav.php';
+        }
+    ?>
 
     <div class="m-5 p-6 bg-white p-8 rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold text-center mb-2">Change password</h2>

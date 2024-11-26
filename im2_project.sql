@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 05:41 AM
+-- Generation Time: Nov 26, 2024 at 08:45 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -224,7 +224,7 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `
 (25, 'SIA 1', 'SYSTEM INTEGRATION AND ARCHITECTURE 1', 3, 'BSIT'),
 (26, 'BASIC ELECT', 'BASIC ELECTRONICS', 3, 'BSIT'),
 (27, 'GE1', 'MATHEMATICS IN THE MODERN WORLD', 3, 'BSIT'),
-(28, 'GE2', 'UNDERSTANDING THE SELF', 3, 'BSIT');
+(29, 'GE2', 'UNDERSTANDING THE SELF', 3, 'BSIT');
 
 -- --------------------------------------------------------
 
@@ -245,8 +245,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
-(1, 123, '$2y$10$fz4J03yoQiaFcSAHd2LJK.01cNmwJ80.mVTLbrnPbH14XpuNzEdD6', 1, 1),
-(4, 20240002, '$2y$10$qF9lXF2h5If9TJqgzFMoUuIMEgXD0goB/WKK1LaAyQtNp9GPmk832', 0, 1),
+(1, 123, '$2y$10$umtDjhNAjQAUnERwVso1Y.xg9jhZXb24D2ka.P6.wk7OvVJ2gIIii', 1, 1),
+(4, 20240002, '$2y$10$33ykNXk3uxCOSJNhBkDVn.m0q5YCUv7ln2LKZVeOI4zzGORIfeA5C', 0, 1),
 (5, 20240003, '$2y$10$iSnys6XLv8RumV0ZeaXhG.R3mzrMfF0OlJYhyHcqOXC75DzxTU9qW', 0, 1),
 (6, 20240004, '$2y$10$bzPHJbG29BNic1Ko9q4L0egFaYh8kv8xxreIS1/LEYW03KUjEH/T6', 0, 1),
 (7, 20240005, '$2y$10$2k20vYAZ2oqR88bgdy21l.Q1P31onMyfOeFuuESiLvbS9wrj.saRe', 1, 1),
@@ -338,8 +338,7 @@ INSERT INTO `users_subjects` (`stud_id`, `subject_id`, `time`, `room`, `day`) VA
 (20240002, 15, '7:30-9:00 AM', '201', 'TTH'),
 (20240002, 9, '9:00-10:30 AM', 'LAB3', 'TTH'),
 (20240002, 17, '10:30-12:00 PM', 'LAB3', 'TTH'),
-(20240002, 18, '7:00-10:00 AM', '401', 'SAT'),
-(20240002, 19, '10:00-1:00 PM', '101', 'SAT');
+(20240002, 18, '7:00-10:00 AM', '401', 'SAT');
 
 -- --------------------------------------------------------
 
@@ -366,7 +365,9 @@ ALTER TABLE `subjects`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `stud_id` (`stud_id`);
+  ADD UNIQUE KEY `stud_id` (`stud_id`),
+  ADD UNIQUE KEY `stud_id_2` (`stud_id`),
+  ADD KEY `stud_id_3` (`stud_id`);
 
 --
 -- Indexes for table `users_guardian_info`
@@ -384,8 +385,8 @@ ALTER TABLE `users_info`
 -- Indexes for table `users_subjects`
 --
 ALTER TABLE `users_subjects`
-  ADD KEY `subject_id` (`subject_id`),
-  ADD KEY `stud_id` (`stud_id`);
+  ADD KEY `stud_id` (`stud_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -395,13 +396,35 @@ ALTER TABLE `users_subjects`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `users_guardian_info`
+--
+ALTER TABLE `users_guardian_info`
+  ADD CONSTRAINT `users_guardian_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `users_info`
+--
+ALTER TABLE `users_info`
+  ADD CONSTRAINT `users_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `users_subjects`
+--
+ALTER TABLE `users_subjects`
+  ADD CONSTRAINT `users_subjects_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

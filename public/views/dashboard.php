@@ -12,7 +12,7 @@
     <?php require_once 'userNav.php'?>   
 
     <h1 class="text-center text-xl mt-2">STUDENT ID: <?php echo $_SESSION['stud_id']?></>
-    <div class="flex justify-around mt-5 sm:px-3">
+    <div class="flex justify-around mt-5 sm:px-12">
         <table class="w-full" id="subjectsTbl">
             <thead>
                 <tr>

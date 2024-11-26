@@ -10,10 +10,10 @@
 </head>
 <body>
     <?php require_once 'adminNav.php'?>   
-    <div class="px-4 py-2 bg-green-200 flex justify-start">            
+    <div class="px-4 py-2 bg-amber-200 flex justify-start">            
         <a href="/updateprofile"><button class="bg-blue-500 text-white text-lg px-2 py-1 rounded hover:bg-red-600">EDIT</button></a>
     </div>
-    <div class="px-3 py-2 sm:px-6 bg-green-200">
+    <div class="px-3 py-2 sm:px-6 bg-amber-200">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             User Profile
         </h3>     
@@ -33,7 +33,7 @@
                     Password
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <a href="/changepass"><button class="bg-red-500 text-white text-medium px-1 py-1 rounded hover:bg-red-600">Change</button></a>
+                <a href="/changepass"><button class="bg-red-500 text-white text-medium p-2 rounded hover:bg-red-600">Change</button></a>
                 </dd>
             </div>
             <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -87,7 +87,7 @@
         </dl>
     </div>
     
-    <div class="px-4 py-5 sm:px-6 bg-green-200">
+    <div class="px-4 py-5 sm:px-6 bg-amber-200">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             User's Guardian Profile
         </h3>
