@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 08:45 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Nov 28, 2024 at 12:11 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -224,7 +224,8 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_name`, `units`, `
 (25, 'SIA 1', 'SYSTEM INTEGRATION AND ARCHITECTURE 1', 3, 'BSIT'),
 (26, 'BASIC ELECT', 'BASIC ELECTRONICS', 3, 'BSIT'),
 (27, 'GE1', 'MATHEMATICS IN THE MODERN WORLD', 3, 'BSIT'),
-(29, 'GE2', 'UNDERSTANDING THE SELF', 3, 'BSIT');
+(29, 'GE2', 'UNDERSTANDING THE SELF', 3, 'BSIT'),
+(30, 'PE1', 'PATHFIT', 2, 'BSIT');
 
 -- --------------------------------------------------------
 
@@ -250,7 +251,8 @@ INSERT INTO `users` (`user_id`, `stud_id`, `stud_pass`, `Role`, `Flag`) VALUES
 (5, 20240003, '$2y$10$iSnys6XLv8RumV0ZeaXhG.R3mzrMfF0OlJYhyHcqOXC75DzxTU9qW', 0, 1),
 (6, 20240004, '$2y$10$bzPHJbG29BNic1Ko9q4L0egFaYh8kv8xxreIS1/LEYW03KUjEH/T6', 0, 1),
 (7, 20240005, '$2y$10$2k20vYAZ2oqR88bgdy21l.Q1P31onMyfOeFuuESiLvbS9wrj.saRe', 1, 1),
-(8, 20240006, '$2y$10$N2DaISJ7TD7b8/ALOTLfj.dlz6Nc1MHyURvKa3saCRDCM1vtZoNJu', 0, 1);
+(8, 20240006, '$2y$10$N2DaISJ7TD7b8/ALOTLfj.dlz6Nc1MHyURvKa3saCRDCM1vtZoNJu', 0, 1),
+(9, 20240007, '$2y$10$un5RUpDTf71QIsynGHl2j.Fp.tV1vbQVJFjnbvvqtrLEus5KkaRum', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -277,7 +279,8 @@ INSERT INTO `users_guardian_info` (`user_id`, `gfname`, `gmname`, `glname`, `gad
 (5, 'SHERIL', '', 'SERNA', 'PILIPOG', '09123456789'),
 (6, 'MARY', '', 'MONTéS', 'ALEGRIA', '09123456789'),
 (7, 'ADMIN II F', 'ADMIN II M', 'ADMIN II L', 'ADMIN II', '09123456789'),
-(8, 'GRIZEL', 'VALVERDE', 'GIL', 'GABI', '09123456789');
+(8, 'GRIZEL', 'VALVERDE', 'GIL', 'GABI', '09123456789'),
+(9, 'GEORGE', '', 'DOE', 'GABI', '09176262143');
 
 -- --------------------------------------------------------
 
@@ -306,7 +309,8 @@ INSERT INTO `users_info` (`user_id`, `course`, `fname`, `mname`, `lname`, `DOB`,
 (5, 'BSIT', 'ELLEN', '', 'SERNA', '1991-11-17', 'PILIPOG', '09782634623'),
 (6, 'BSIT', 'EDELIRA', '', 'MONTéS', '2001-11-17', 'ALEGRIA', '09736423764'),
 (7, '', 'ADMIN II F', 'ADMIN II M', 'ADMIN II L', '2007-11-17', 'ADMIN II', '09123762364'),
-(8, 'BSIT', 'BEDA', 'VALVERDE', 'GIL', '2006-07-27', 'GABI', '09647283663');
+(8, 'BSIT', 'BEDA', 'VALVERDE', 'GIL', '2006-07-27', 'GABI', '09647283663'),
+(9, 'BSIT', 'MARK', '', 'DOE', '2000-11-28', 'GABI', '09716276371');
 
 -- --------------------------------------------------------
 
@@ -338,7 +342,8 @@ INSERT INTO `users_subjects` (`stud_id`, `subject_id`, `time`, `room`, `day`) VA
 (20240002, 15, '7:30-9:00 AM', '201', 'TTH'),
 (20240002, 9, '9:00-10:30 AM', 'LAB3', 'TTH'),
 (20240002, 17, '10:30-12:00 PM', 'LAB3', 'TTH'),
-(20240002, 18, '7:00-10:00 AM', '401', 'SAT');
+(20240007, 30, '10:00-1:00 PM', 'TENT1', 'SAT'),
+(20240007, 2, '7:00-8:00 AM', 'LAB1', 'MWF');
 
 -- --------------------------------------------------------
 
@@ -396,13 +401,13 @@ ALTER TABLE `users_subjects`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

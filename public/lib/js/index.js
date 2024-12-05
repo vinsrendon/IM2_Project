@@ -251,11 +251,11 @@ function getStudents(){
                 }         
                 if(student.Role === 0){
                     newRow.innerHTML=`
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.stud_id}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.lname}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.fname}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${student.mname}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${student.stud_id}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${student.lname}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${student.fname}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${student.mname}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">
                     <button class="m-1 bg-blue-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-blue-600" onclick="getStudentById(${student.user_id})">INFO</button>
                     <button class="m-1 bg-blue-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-blue-600" onclick="set_stud_id_to_get_sub(${student.stud_id})">SUBJECTS</button>
                     <button class="m-1 bg-red-500 text-white text-xs sm:text-lg sm:p-2 p-0.5 rounded hover:bg-red-600" onclick="resetPass(${student.user_id})">RESET PASS</button>
@@ -501,11 +501,11 @@ function getSubjects(){
                 let newRow = tbody.insertRow();
 
                 newRow.innerHTML=`
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.subject_code}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.subject_name}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.units}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">${subject.course}</td>
-                    <td class="border border-slate-300 text-center sm:p-2 text-xs sm:text-lg">
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${subject.subject_code}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${subject.subject_name}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${subject.units}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">${subject.course}</td>
+                    <td class="border border-slate-200 text-center sm:p-2 text-xs sm:text-lg">
                     <button class="m-1 bg-red-500 text-white text-sm sm:text-lg p-1 sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="dltSubject(${subject.subject_id})">DELETE</button>
                     </td>
                 `;
@@ -563,14 +563,14 @@ function getStudSub(sid,role){
                 let newRow = tbody.insertRow();
 
                 newRow.innerHTML=`
-                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.subject_code}</td>
-                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.subject_name}</td>
-                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.units}</td>
-                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.time}</td>
-                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.day}</td>
-                    <td class="border border-slate-300 text-center text-xs sm:text-lg">${subject.room}</td>
+                    <td class="border border-slate-200 text-center text-xs sm:text-lg">${subject.subject_code}</td>
+                    <td class="border border-slate-200 text-center text-xs sm:text-lg">${subject.subject_name}</td>
+                    <td class="border border-slate-200 text-center text-xs sm:text-lg">${subject.units}</td>
+                    <td class="border border-slate-200 text-center text-xs sm:text-lg">${subject.time}</td>
+                    <td class="border border-slate-200 text-center text-xs sm:text-lg">${subject.day}</td>
+                    <td class="border border-slate-200 text-center text-xs sm:text-lg">${subject.room}</td>
                     ${
-                        role === 1 ? `<td class="border border-slate-300 text-center text-sm sm:text-lg">                    
+                        role === 1 ? `<td class="border border-slate-200 text-center text-sm sm:text-lg">                    
                         <button class="m-1 bg-red-500 text-white text-lg sm:px-2 sm:py-1 rounded hover:bg-red-600" onclick="dltStudSub(${sid},${subject.subject_id},${role})">DELETE</button>
                         </td>`
                         : ``

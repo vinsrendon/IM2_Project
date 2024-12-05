@@ -63,7 +63,7 @@
                 <tr>
                     <th class="border border-amber-300 p-2 text-sm sm:text-lg">Subject Code</th>
                     <th class="border border-amber-300 p-2 text-sm sm:text-lg">Subject Name</th>
-                    <th class="border border-amber-300 p-2 text-sm sm:text-lg">Subject Units</th>
+                    <th class="border border-amber-300 p-2 text-sm sm:text-lg">Units</th>
                     <th class="border border-amber-300 p-2 text-sm sm:text-lg">Time</th>
                     <th class="border border-amber-300 p-2 text-sm sm:text-lg">Day</th>
                     <th class="border border-amber-300 p-2 text-sm sm:text-lg">Room</th>

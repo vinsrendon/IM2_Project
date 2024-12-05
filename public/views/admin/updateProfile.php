@@ -21,21 +21,21 @@
         <div class="flex flex-wrap sm:grap-4 gap-2 mb-4">
             <div class="w-full sm:flex-1">
                 <label for="fname" class="text-sm font-medium text-gray-700">First Name</label>
-                <input type="text" id="fname" name="fname" placeholder="Enter first name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value='<?php echo $_SESSION['fname']?>' autocapitalize="true">
+                <input disabled type="text" id="fname" name="fname" placeholder="Enter first name" class="bg-gray-200 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value='<?php echo $_SESSION['fname']?>' autocapitalize="true">
             </div>
             <div class="w-full sm:flex-1">
                 <label for="mname" class="text-sm font-medium text-gray-700">Middle Name</label>
-                <input type="text" id="mname" name="mname" placeholder="Enter middle name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value='<?php echo $_SESSION['mname']?>' autocapitalize="true">
+                <input disabled type="text" id="mname" name="mname" placeholder="Enter middle name" class="bg-gray-200 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value='<?php echo $_SESSION['mname']?>' autocapitalize="true">
             </div>
             <div class="w-full sm:flex-1">
                 <label for="lname" class="text-sm font-medium text-gray-700">Last Name</label>
-                <input type="text" id="lname" name="lname" placeholder="Enter last name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value='<?php echo $_SESSION['lname']?>' autocapitalize="true">
+                <input disabled type="text" id="lname" name="lname" placeholder="Enter last name" class="bg-gray-200 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value='<?php echo $_SESSION['lname']?>' autocapitalize="true">
             </div>
         </div>
 
         <div class="mb-4">
             <label for="DOB" class="block text-sm font-medium text-gray-700">Date of Birth</label>
-            <input type="date" id="DOB" name="DOB" value='<?php echo $_SESSION['DOB']?>' class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <input disabled type="date" id="DOB" name="DOB" value='<?php echo $_SESSION['DOB']?>' class="bg-gray-200 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
         </div>
 
         <div class="mb-4">
