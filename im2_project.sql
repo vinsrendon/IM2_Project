@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 12:11 PM
+-- Generation Time: Dec 05, 2024 at 01:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,6 +49,10 @@ DECLARE subjectCount INT;
             SELECT 1 FROM users_subjects WHERE stud_id = sid AND time = timeA AND day = dayA
         ) THEN
             SIGNAL SQLSTATE '23001';
+        ELSEIF EXISTS (
+            SELECT 1 FROM users_subjects WHERE stud_id = sid AND subject_id = subId
+        ) THEN
+            SIGNAL SQLSTATE '23002';
         ELSE
             INSERT INTO users_subjects (stud_id, subject_id,time,room,day) 
             VALUES (sid, subId, timeA, roomA,dayA);
@@ -343,7 +347,15 @@ INSERT INTO `users_subjects` (`stud_id`, `subject_id`, `time`, `room`, `day`) VA
 (20240002, 9, '9:00-10:30 AM', 'LAB3', 'TTH'),
 (20240002, 17, '10:30-12:00 PM', 'LAB3', 'TTH'),
 (20240007, 30, '10:00-1:00 PM', 'TENT1', 'SAT'),
-(20240007, 2, '7:00-8:00 AM', 'LAB1', 'MWF');
+(20240007, 2, '7:00-8:00 AM', 'LAB1', 'MWF'),
+(20240003, 2, '7:00-8:00 AM', 'LAB1', 'MWF'),
+(20240003, 3, '8:00-9:00 AM', 'LAB1', 'MWF'),
+(20240003, 5, '9:00-10:00 AM', 'LAB1', 'MWF'),
+(20240003, 11, '10:00-11:00 AM', 'LAB1', 'MWF'),
+(20240003, 15, '11:00-12:00 PM', '101', 'MWF'),
+(20240003, 9, '7:30-9:00 AM', 'LAB3', 'TTH'),
+(20240003, 20, '9:00-10:30 AM', '201', 'TTH'),
+(20240003, 17, '7:00-10:00 AM', 'LAB1', 'SAT');
 
 -- --------------------------------------------------------
 
