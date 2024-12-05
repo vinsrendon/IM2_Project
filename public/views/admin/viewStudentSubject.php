@@ -54,7 +54,7 @@
                 <label id="fieldError" class="text-red-500 text-sm hidden">Please select a subject to add</label>
             </div>
             
-            <input type="button" value="ADD SUBJECT" onclick="addSubjectToUser(<?php echo $_SESSION['stud_id_to_get_sub']?>,<?php echo $_SESSION['Role']?>)" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <input type="button" id="addSubBtn" value="ADD SUBJECT" onclick="addSubjectToUser(<?php echo $_SESSION['stud_id_to_get_sub']?>,<?php echo $_SESSION['Role']?>)" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
         </div>
     </div>
     <div class="flex justify-around mt-5 sm:px-3 mb-10">

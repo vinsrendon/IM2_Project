@@ -109,6 +109,10 @@ class subjectController{
             {
                 return json_encode(['status' => 'conflict']);
             }
+            else if($th->getCode() == 23002)
+            {
+                return json_encode(['status' => 'subExist']);
+            }
             else {
                 return json_encode($th);
             }

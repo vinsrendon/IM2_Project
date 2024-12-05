@@ -833,10 +833,15 @@ function addSubjectToUser(sid,role){
     let timeToAdd = document.getElementById("time").value.trim()
     let roomToAdd = document.getElementById("room").value.trim()
 
+    let button = document.getElementById("addSubBtn");
+
+    button.value = "Adding...";
+
     fieldError.classList.add("hidden");
 
     if(!subToAdd || !dayToAdd || !timeToAdd || !roomToAdd){
         fieldError.classList.remove("hidden");
+        button.value = "ADD SUBJECT";
         return;
     }
 
@@ -864,6 +869,7 @@ function addSubjectToUser(sid,role){
                     getStudSub(sid,role);
                     loadSubjects();
                     resetVSSPage();
+                    button.value = "ADD SUBJECT";
                 });
                                           
             }
@@ -877,6 +883,7 @@ function addSubjectToUser(sid,role){
                 }).then(()=>{
                     loadSubjects();
                     resetVSSPage();
+                    button.value = "ADD SUBJECT";
                 });
             }     
             else if(result.status === 'limit'){
@@ -889,6 +896,7 @@ function addSubjectToUser(sid,role){
                 }).then(() => {
                     loadSubjects();
                     resetVSSPage();
+                    button.value = "ADD SUBJECT";
                 });
             }
             else if(result.status === 'conflict'){
@@ -899,23 +907,35 @@ function addSubjectToUser(sid,role){
                     showConfirmButton: false,
                     timer: 2500
                 }).then(() => {
-                    console.log(sid+ " " +
-                        subToAdd+ " " +
-                        dayToAdd+ " " +
-                        timeToAdd+ " " +
-                        roomToAdd);
                     
                     loadSubjects();
                     resetVSSPage();
+                    button.value = "ADD SUBJECT";
+                });
+            }
+            else if(result.status === 'subExist'){
+                Swal.fire({
+                    icon: "error",
+                    title: "Duplicate Subject",        
+                    text: "User has that subject already",
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then(() => {
+                    
+                    loadSubjects();
+                    resetVSSPage();
+                    button.value = "ADD SUBJECT";
                 });
             }
             else
             {
-                console.log(result);                
+                console.log(result);        
+                button.value = "ADD SUBJECT";        
             }           
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", status, error);
+            button.value = "ADD SUBJECT";
         },
     });
 }
