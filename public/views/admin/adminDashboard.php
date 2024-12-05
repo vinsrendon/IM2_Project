@@ -48,11 +48,18 @@
 
 </body>
 <script>
-    document.getElementById("search").addEventListener("keypress", function (e) {        
+    document.getElementById("search").addEventListener("keydown", function (e) {        
 
-        const input = document.getElementById("search").value;
+        const input = document.getElementById("search").value.toUpperCase();
         const table = document.getElementById("studentsTbl");
         const rows = table.getElementsByTagName("tr");
+
+        if (input === "") {
+            for (let i = 1; i < rows.length; i++) {
+                rows[i].style.display = "";
+            }
+            return;
+        }
 
         for (let i = 1; i < rows.length; i++) {
             let cells = rows[i].getElementsByTagName("td");
